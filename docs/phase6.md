@@ -26,9 +26,9 @@ In modern document intelligence workflows, business users and software engineers
 
  • Visual Document Scan Preview • Tabs: [ JSON | Table | Grounding] 
  • Color-Coded Bounding Boxes: • Strictly Validated Pydantic Schema
- [🟩 Header: INV-2026-8891] • Verified Totals & Tax Math 
- [🟦 Key-Value: Vendor/Customer] • Grounding Badge: 100% GROUNDED 
- [🟨 Table Region: 3 Line Items] • One-Click CSV / Markdown Download 
+ [[PASS]  Header: INV-2026-8891] • Verified Totals & Tax Math 
+ [[INFO]  Key-Value: Vendor/Customer] • Grounding Badge: 100% GROUNDED 
+ [[WARN]  Table Region: 3 Line Items] • One-Click CSV / Markdown Download 
  
  • Preset Document Selector: • Telemetry HUD: 
  (Tax Invoice, Balance Sheet) Latency: 51ms | Confidence: 0.985 
