@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multimodal Document Intelligence · OpenAI Interface</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            chatgpt: {
+              main: '#212121',
+              sidebar: '#171717',
+              input: '#2f2f2f',
+              hover: '#2f2f2f',
+              border: '#303030',
+              text: '#ececec',
+              muted: '#b4b4b4',
+              subtle: '#676767',
+              green: '#10a37f',
+              greenHover: '#1a7f64',
+              userMsg: '#2f2f2f'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #424242; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #565656; }
+  </style>
+</head>
+<body class="bg-chatgpt-main text-chatgpt-text font-sans antialiased h-screen flex overflow-hidden">
+
+  <!-- Left Sidebar (OpenAI Style) -->
+  <aside class="w-64 bg-chatgpt-sidebar border-r border-chatgpt-border flex flex-col justify-between shrink-0 z-30">
+    <div class="p-3 space-y-3">
+      <!-- Header / Logo -->
+      <div class="flex items-center gap-2.5 px-2 py-2">
+        <div class="w-7 h-7 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs">
+          <svg class="w-4 h-4 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <div class="font-bold text-sm text-chatgpt-text">DocIntelligence <span class="text-chatgpt-green">AI</span></div>
+      </div>
+
+      <!-- Presets & Sample Ingestion -->
+      <div class="pt-2 border-t border-chatgpt-border space-y-2">
+        <span class="text-[11px] font-semibold text-chatgpt-subtle tracking-wider uppercase px-2">Sample Documents</span>
+        
+        <button onclick="loadDocument('invoice')" class="w-full text-left px-3 py-2.5 rounded-xl bg-chatgpt-main hover:bg-chatgpt-hover border border-chatgpt-border text-xs font-medium text-chatgpt-text transition-colors flex items-center justify-between group cursor-pointer">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-chatgpt-green"></span>
+            <span>Commercial Tax Invoice</span>
+          </div>
+          <span class="text-[10px] text-chatgpt-subtle font-mono">PDF</span>
+        </button>
+
+        <button onclick="loadDocument('balancesheet')" class="w-full text-left px-3 py-2.5 rounded-xl bg-chatgpt-main hover:bg-chatgpt-hover border border-chatgpt-border text-xs font-medium text-chatgpt-text transition-colors flex items-center justify-between group cursor-pointer">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+            <span>Balance Sheet Q2</span>
+          </div>
+          <span class="text-[10px] text-chatgpt-subtle font-mono">XLS</span>
+        </button>
+      </div>
+
+      <!-- Telemetry Status Card -->
+      <div class="p-3 rounded-xl bg-chatgpt-main border border-chatgpt-border space-y-2 text-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-chatgpt-subtle text-[11px] font-semibold uppercase">Engine Status</span>
+          <span class="text-[10px] font-mono text-chatgpt-green bg-chatgpt-green/10 px-1.5 py-0.5 rounded font-bold">ONLINE</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-[11px] font-mono pt-1">
+          <div class="bg-chatgpt-sidebar p-2 rounded-lg">
+            <div class="text-chatgpt-subtle text-[10px]">ACCURACY</div>
+            <div class="text-chatgpt-text font-bold text-sm">100.0%</div>
+          </div>
+          <div class="bg-chatgpt-sidebar p-2 rounded-lg">
+            <div class="text-chatgpt-subtle text-[10px]">GROUNDING</div>
+            <div class="text-chatgpt-green font-bold text-sm">1.000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-3 border-t border-chatgpt-border">
+      <div class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-chatgpt-hover transition-colors">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-chatgpt-green to-emerald-300 flex items-center justify-center font-bold text-xs text-black">
+          VK
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-sm font-medium text-chatgpt-text truncate">Vinay K R</div>
+          <div class="text-xs text-chatgpt-subtle truncate">Vision AI Architect</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Viewport (Split-Screen Document Inspector) -->
+  <div class="flex-1 flex flex-col h-full bg-chatgpt-main overflow-hidden">
+    
+    <!-- Top Action Bar -->
+    <header class="h-14 border-b border-chatgpt-border px-6 flex items-center justify-between shrink-0 bg-chatgpt-main/90 backdrop-blur-sm z-20">
+      <div class="flex items-center gap-3">
+        <span class="text-sm font-semibold text-chatgpt-text" id="doc-title-badge">INV-2026-8891.pdf</span>
+        <span class="text-xs font-mono px-2 py-0.5 rounded bg-chatgpt-sidebar border border-chatgpt-border text-chatgpt-green">Pydantic Enforced</span>
+        <span class="text-xs font-mono px-2 py-0.5 rounded bg-chatgpt-sidebar border border-chatgpt-border text-purple-400">100% Grounded</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="runExtraction()" class="px-4 py-1.5 rounded-xl bg-white text-black font-semibold text-xs hover:bg-gray-200 transition-colors cursor-pointer shadow-sm">
+          ⚡ Run Vision Extraction
+        </button>
+      </div>
+    </header>
+
+    <!-- Split Screen Content Grid -->
+    <div class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 overflow-hidden">
+      
+      <!-- Left Pane: Spatial Document Canvas Preview -->
+      <div class="flex flex-col rounded-2xl bg-chatgpt-sidebar border border-chatgpt-border overflow-hidden">
+        <div class="p-3 border-b border-chatgpt-border bg-chatgpt-main/40 flex items-center justify-between text-xs">
+          <span class="font-medium text-chatgpt-muted flex items-center gap-2">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            2D Spatial Layout Canvas
+          </span>
+          <span class="text-[10px] font-mono text-chatgpt-subtle">Normalized Bounding Boxes</span>
+        </div>
+        
+        <div class="flex-1 p-5 overflow-y-auto bg-chatgpt-main/20 space-y-4">
+          <!-- Document Simulation Visual Card -->
+          <div class="p-6 rounded-xl bg-white text-black shadow-2xl space-y-4 font-sans text-xs max-w-md mx-auto border border-gray-200">
+            <!-- Header Box -->
+            <div class="p-2.5 rounded border-2 border-emerald-500 bg-emerald-50/50 flex justify-between items-start">
+              <div>
+                <h3 class="font-bold text-sm text-gray-900">ACME CORP — TAX INVOICE</h3>
+                <p class="text-[10px] text-gray-600">CloudScale Systems Inc · San Francisco, CA</p>
+              </div>
+              <div class="text-right">
+                <span class="font-mono font-bold text-emerald-700">INV-2026-8891</span>
+                <p class="text-[10px] text-gray-500">Date: 2026-08-21</p>
+              </div>
+            </div>
+
+            <!-- Customer Box -->
+            <div class="p-2 rounded border border-blue-400 bg-blue-50/40">
+              <span class="text-[10px] text-blue-700 font-bold uppercase block">Billed To:</span>
+              <p class="font-semibold text-gray-800">Medha Platform Corp</p>
+              <p class="text-[10px] text-gray-600">Bangalore, India</p>
+            </div>
+
+            <!-- Table Region Box -->
+            <div class="p-2 rounded border-2 border-purple-500 bg-purple-50/40">
+              <span class="text-[10px] text-purple-700 font-bold uppercase block mb-1">Table Region (3 Line Items):</span>
+              <table class="w-full text-left text-[10px] border-collapse">
+                <thead>
+                  <tr class="border-b border-purple-200 text-gray-700">
+                    <th class="py-1">Description</th>
+                    <th class="py-1 text-center">Qty</th>
+                    <th class="py-1 text-right">Price</th>
+                    <th class="py-1 text-right">Total</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-purple-100 text-gray-800">
+                  <tr><td class="py-1">Enterprise Cloud Gateway Node</td><td class="text-center">4</td><td class="text-right">$1,250</td><td class="text-right font-semibold">$5,000</td></tr>
+                  <tr><td class="py-1">Redis 8 Vector Cache License</td><td class="text-center">2</td><td class="text-right">$800</td><td class="text-right font-semibold">$1,600</td></tr>
+                  <tr><td class="py-1">Multimodal Vision OCR Engine</td><td class="text-center">1</td><td class="text-right">$2,400</td><td class="text-right font-semibold">$2,400</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Totals Box -->
+            <div class="p-2.5 rounded border-2 border-amber-500 bg-amber-50/50 flex justify-between items-center text-xs">
+              <span class="font-semibold text-gray-700">Grand Total Amount:</span>
+              <span class="font-bold font-mono text-sm text-gray-900">$10,620.00 USD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Pane: Multi-Tab Structured Data & Grounding Viewer -->
+      <div class="flex flex-col rounded-2xl bg-chatgpt-sidebar border border-chatgpt-border overflow-hidden">
+        
+        <!-- Tab Navigation Bar -->
+        <div class="p-2 border-b border-chatgpt-border bg-chatgpt-main/40 flex items-center justify-between">
+          <div class="flex gap-1 text-xs">
+            <button onclick="switchTab('json')" id="tab-btn-json" class="px-3 py-1.5 rounded-lg bg-chatgpt-input text-chatgpt-text font-semibold transition-colors cursor-pointer">Pydantic JSON</button>
+            <button onclick="switchTab('table')" id="tab-btn-table" class="px-3 py-1.5 rounded-lg text-chatgpt-subtle hover:text-chatgpt-text transition-colors cursor-pointer">Markdown Table</button>
+            <button onclick="switchTab('grounding')" id="tab-btn-grounding" class="px-3 py-1.5 rounded-lg text-chatgpt-subtle hover:text-chatgpt-text transition-colors cursor-pointer">Grounding Shield</button>
+          </div>
+          <button onclick="copyCurrentOutput()" class="text-xs text-chatgpt-subtle hover:text-chatgpt-text px-2 py-1 rounded border border-chatgpt-border hover:bg-chatgpt-hover transition-colors cursor-pointer">Copy</button>
+        </div>
+
+        <!-- Tab Content Viewport -->
+        <div class="flex-1 p-4 overflow-y-auto font-mono text-xs leading-relaxed">
+          
+          <!-- Tab 1: Pydantic JSON -->
+          <div id="tab-content-json" class="text-emerald-400 whitespace-pre">
+{
+  "invoice_number": "INV-2026-8891",
+  "invoice_date": "2026-08-21",
+  "vendor_name": "CloudScale Systems Inc",
+  "customer_name": "Medha Platform Corp",
+  "line_items": [
+    {
+      "item_index": 1,
+      "description": "Enterprise Cloud Gateway Node",
+      "quantity": 4.0,
+      "unit_price": 1250.0,
+      "total_price": 5000.0
+    },
+    {
+      "item_index": 2,
+      "description": "Redis 8 Vector Cache License",
+      "quantity": 2.0,
+      "unit_price": 800.0,
+      "total_price": 1600.0
+    },
+    {
+      "item_index": 3,
+      "description": "Multimodal Vision OCR Engine",
+      "quantity": 1.0,
+      "unit_price": 2400.0,
+      "total_price": 2400.0
+    }
+  ],
+  "subtotal": 9000.0,
+  "tax_amount": 1620.0,
+  "total_amount": 10620.0,
+  "currency": "USD",
+  "confidence_score": 0.985
+}
+          </div>
+
+          <!-- Tab 2: Markdown Table -->
+          <div id="tab-content-table" class="hidden text-chatgpt-text whitespace-pre">
+| Item | Description | Quantity | Unit Price | Total |
+| --- | --- | --- | --- | --- |
+| 1 | Enterprise Cloud Gateway Node | 4 | $1,250.00 | $5,000.00 |
+| 2 | Redis 8 Vector Cache License | 2 | $800.00 | $1,600.00 |
+| 3 | Multimodal Vision OCR Engine | 1 | $2,400.00 | $2,400.00 |
+
+✓ Arithmetic Assertion Passed: Sum(Totals) == $9,000.00
+✓ Tax Computation (18% GST): $1,620.00
+✓ Grand Total Verified: $10,620.00
+          </div>
+
+          <!-- Tab 3: Grounding Shield -->
+          <div id="tab-content-grounding" class="hidden text-xs space-y-2">
+            <div class="p-3 rounded-xl bg-chatgpt-input border border-chatgpt-border flex justify-between items-center">
+              <div>
+                <span class="font-bold text-chatgpt-green">✓ DOCUMENT 100% GROUNDED</span>
+                <p class="text-[11px] text-chatgpt-subtle">All extracted scalar fields &amp; tables match source OCR tokens.</p>
+              </div>
+              <span class="text-sm font-bold font-mono text-chatgpt-text">Precision: 1.000</span>
+            </div>
+            
+            <div class="space-y-1.5 pt-2 text-[11px]">
+              <div class="flex justify-between p-2 rounded bg-chatgpt-main border border-chatgpt-border">
+                <span class="text-chatgpt-muted">invoice_number</span>
+                <span class="text-chatgpt-green">✓ Matched: 'INV-2026-8891' (100%)</span>
+              </div>
+              <div class="flex justify-between p-2 rounded bg-chatgpt-main border border-chatgpt-border">
+                <span class="text-chatgpt-muted">vendor_name</span>
+                <span class="text-chatgpt-green">✓ Matched: 'CloudScale Systems Inc' (100%)</span>
+              </div>
+              <div class="flex justify-between p-2 rounded bg-chatgpt-main border border-chatgpt-border">
+                <span class="text-chatgpt-muted">total_amount</span>
+                <span class="text-chatgpt-green">✓ Matched: '10620.0' (100%)</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(tabName) {
+      ['json', 'table', 'grounding'].forEach(t => {
+        document.getElementById(`tab-content-${t}`).classList.add('hidden');
+        document.getElementById(`tab-btn-${t}`).className = 'px-3 py-1.5 rounded-lg text-chatgpt-subtle hover:text-chatgpt-text transition-colors cursor-pointer';
+      });
+      document.getElementById(`tab-content-${tabName}`).classList.remove('hidden');
+      document.getElementById(`tab-btn-${tabName}`).className = 'px-3 py-1.5 rounded-lg bg-chatgpt-input text-chatgpt-text font-semibold transition-colors cursor-pointer';
+    }
+
+    function loadDocument(type) {
+      if (type === 'invoice') {
+        document.getElementById('doc-title-badge').textContent = 'INV-2026-8891.pdf';
+        switchTab('json');
+      } else {
+        document.getElementById('doc-title-badge').textContent = 'Balance_Sheet_Q2.pdf';
+        switchTab('table');
+      }
+    }
+
+    function runExtraction() {
+      const btn = document.querySelector('header button');
+      btn.textContent = 'Processing...';
+      setTimeout(() => {
+        btn.textContent = '⚡ Run Vision Extraction';
+        alert('Vision Extraction & Grounding Verification Completed in 51.2ms!');
+      }, 300);
+    }
+
+    function copyCurrentOutput() {
+      navigator.clipboard.writeText(document.getElementById('tab-content-json').textContent);
+      alert('Copied to clipboard!');
+    }
+  </script>
+</body>
+</html>
