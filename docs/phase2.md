@@ -1,8 +1,8 @@
-# 📘 Phase 2: Vision LLM Extraction & Pydantic Schema Enforcement
+# Phase 2: Vision LLM Extraction & Pydantic Schema Enforcement
 
 ---
 
-## 🎯 1. Overview & Objective
+## 1. Overview & Objective
 
 Unstructured LLM text outputs frequently suffer from **schema drift, missing required fields, and non-deterministic formatting** when parsing high-stakes enterprise documents.
 - In financial, legal, and compliance workflows, downstream ERP and ledger systems require **100% strictly typed JSON schemas**.
@@ -15,33 +15,33 @@ Unstructured LLM text outputs frequently suffer from **schema drift, missing req
 
 ---
 
-## 📐 2. Vision Extraction & Schema Enforcement Pipeline
+## 2. Vision Extraction & Schema Enforcement Pipeline
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    VISION LLM EXTRACTION & VALIDATION FLOW                  │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  Document Page (Image / PDF) ──► [ Multimodal Vision Encoder ]              │
-│                                           │                                 │
-│                                           ▼                                 │
-│                           [ Guided JSON Schema Prompt ]                     │
-│                                           │                                 │
-│                                           ▼                                 │
-│                           [ Raw Vision LLM Completion ]                     │
-│                                           │                                 │
-│                                           ▼                                 │
-│                      [ Pydantic Runtime Schema Validator ]                  │
-│                                           │                                 │
-│                    ┌──────────────────────┴──────────────────────┐          │
-│                    ▼                                             ▼          │
-│          ✓ VALID SCHEMA ENFORCED                       ❌ SCHEMA VIOLATION   │
-│     (Typed Object + Confidence: 0.98)             (Auto-Repair / Flag)      │
-└─────────────────────────────────────────────────────────────────────────────┘
+
+ VISION LLM EXTRACTION & VALIDATION FLOW 
+
+ Document Page (Image / PDF) [ Multimodal Vision Encoder ] 
+ 
+ 
+ [ Guided JSON Schema Prompt ] 
+ 
+ 
+ [ Raw Vision LLM Completion ] 
+ 
+ 
+ [ Pydantic Runtime Schema Validator ] 
+ 
+ 
+ 
+ VALID SCHEMA ENFORCED SCHEMA VIOLATION 
+ (Typed Object + Confidence: 0.98) (Auto-Repair / Flag) 
+
 ```
 
 ---
 
-## 🛠️ 3. Step-by-Step Code Walkthrough
+## 3. Step-by-Step Code Walkthrough
 
 ### Step 1: Enterprise Pydantic Domain Schemas (`src/extractor/schemas.py`)
 - **`LineItemSchema`:** `item_index`, `description`, `quantity`, `unit_price`, `total_price` with non-negative validators.
@@ -54,7 +54,7 @@ Unstructured LLM text outputs frequently suffer from **schema drift, missing req
 
 ---
 
-## 🧪 4. How to Run & Verify Phase 2
+## 4. How to Run & Verify Phase 2
 
 ### Command:
 ```bash
@@ -74,7 +74,7 @@ Unstructured LLM text outputs frequently suffer from **schema drift, missing req
 
 ---
 
-## 💡 5. Technical Questions & Architectural Explanations
+## 5. Technical Questions & Architectural Explanations
 
 ### Q: Why combine spatial OCR layout with Vision LLM visual features rather than relying on Vision LLM images alone?
 > **Answer:** Pure vision-based models often suffer from subtle character errors on small fonts (e.g. misreading `8` as `B`, or dropping decimal places in `10,620.00`). By fusing spatial OCR bounding boxes with visual embeddings, the extractor grounds text tokens in exact 2D coordinates while using visual features to understand multi-level tables, visual stamps, and checkmarks.

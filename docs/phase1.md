@@ -1,8 +1,8 @@
-# 📘 Phase 1: Document Ingestion, Spatial OCR & Layout Analysis
+# Phase 1: Document Ingestion, Spatial OCR & Layout Analysis
 
 ---
 
-## 🎯 1. Overview & Objective
+## 1. Overview & Objective
 
 Enterprise documents (invoices, financial statements, contracts, tax filings, medical reports) present complex **2D spatial structures** that traditional sequential OCR and plain-text extractors fail to parse accurately.
 - Standard OCR linearizes text into unstructured strings, destroying column layouts, table cell associations, and key-value spatial pairings.
@@ -15,26 +15,26 @@ Enterprise documents (invoices, financial statements, contracts, tax filings, me
 
 ---
 
-## 📐 2. Spatial Coordinate System & Layout Classification
+## 2. Spatial Coordinate System & Layout Classification
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    SPATIAL BOUNDING BOX NORMALIZATION                       │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  (0.0, 0.0) ──────────────────────────────────────────────► (1.0, 0.0)      │
-│  │                                                                   │      │
-│  │   ┌────────────────────────┐         ┌────────────────────────┐   │      │
-│  │   │ [HEADER] Invoice #4092 │         │ [METADATA] Date: 08/21 │   │      │
-│  │   │ (x0, y0, x1, y1)       │         │ (x0, y0, x1, y1)       │   │      │
-│  │   └────────────────────────┘         └────────────────────────┘   │      │
-│  │                                                                   │      │
-│  │   ┌───────────────────────────────────────────────────────────┐   │      │
-│  │   │ [TABLE_REGION] Line Items & Tax Subtotals                 │   │      │
-│  │   │ Merged Cells | 2D Spatial Cell Coordinates                │   │      │
-│  │   └───────────────────────────────────────────────────────────┘   │      │
-│  ▼                                                                   ▼      │
-│  (0.0, 1.0) ──────────────────────────────────────────────► (1.0, 1.0)      │
-└─────────────────────────────────────────────────────────────────────────────┘
+
+ SPATIAL BOUNDING BOX NORMALIZATION 
+
+ (0.0, 0.0) (1.0, 0.0) 
+ 
+ 
+ [HEADER] Invoice #4092 [METADATA] Date: 08/21 
+ (x0, y0, x1, y1) (x0, y0, x1, y1) 
+ 
+ 
+ 
+ [TABLE_REGION] Line Items & Tax Subtotals 
+ Merged Cells | 2D Spatial Cell Coordinates 
+ 
+ 
+ (0.0, 1.0) (1.0, 1.0) 
+
 ```
 
 ### A. Coordinate Normalization
@@ -49,7 +49,7 @@ $$\text{Sort Key}(B) = \lfloor y_0 \times 100 \rfloor \times 1000 + \lfloor x_0 
 
 ---
 
-## 🛠️ 3. Step-by-Step Code Walkthrough
+## 3. Step-by-Step Code Walkthrough
 
 ### Step 1: Spatial Data Models (`src/parser/models.py`)
 - `BoundingBox`: Normalized rectangular coordinates with area and overlap calculation utilities.
@@ -66,7 +66,7 @@ $$\text{Sort Key}(B) = \lfloor y_0 \times 100 \rfloor \times 1000 + \lfloor x_0 
 
 ---
 
-## 🧪 4. How to Run & Verify Phase 1
+## 4. How to Run & Verify Phase 1
 
 ### Command:
 ```bash
@@ -86,7 +86,7 @@ $$\text{Sort Key}(B) = \lfloor y_0 \times 100 \rfloor \times 1000 + \lfloor x_0 
 
 ---
 
-## 💡 5. Technical Questions & Architectural Explanations
+## 5. Technical Questions & Architectural Explanations
 
 ### Q: Why normalize bounding boxes to relative [0.0, 1.0] coordinates instead of using raw pixel coordinates?
 > **Answer:** Scanned enterprise documents arrive at vastly different resolutions (e.g. 72 DPI mobile camera scans vs 300 DPI flatbed industrial scans). Normalizing all spatial coordinates into a unit scale ($[0.0, 1.0]$) decouples document layout geometry from physical pixel density, allowing Vision LLMs and spatial downstream extractors to evaluate relative positions uniformly.

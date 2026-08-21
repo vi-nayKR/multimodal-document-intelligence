@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📑 Multimodal Document Intelligence & Vision AI Engine
+# Multimodal Document Intelligence & Vision AI Engine
 ### Spatial Layout Analysis · Vision LLM Extraction · 2D Table Reconstruction · Pydantic Validation · Anti-Hallucination Grounding
 
 [![Python Version](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.14-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
@@ -17,7 +17,7 @@
 
 </div>
 
-## 📌 Executive Summary
+## Executive Summary
 
 Enterprise document extraction from scanned PDFs, invoices, and financial statements suffers from high error rates: **loss of table structure, missing required fields, and silent numerical hallucinations**.
 
@@ -28,7 +28,7 @@ The **Multimodal Document Intelligence Engine** solves this by fusing **spatial 
 
 ---
 
-## 📚 Phased Implementation Guides
+## Phased Implementation Guides
 
 The platform is engineered across 6 modular, production-tested phases with dedicated architectural documentation:
 
@@ -43,36 +43,36 @@ The platform is engineered across 6 modular, production-tested phases with dedic
 
 ---
 
-## 🏛️ System Architecture
+## System Architecture
 
 ```mermaid
 flowchart TD
-    DocInput["📄 Document Input (PDF / Scan / Image)"] --> Ingestion["⚡ Spatial Document Ingestion & Normalization"]
+ DocInput[" Document Input (PDF / Scan / Image)"] --> Ingestion[" Spatial Document Ingestion & Normalization"]
 
-    subgraph SpatialTier ["Layout & OCR Analysis Layer"]
-        Ingestion --> LayoutEngine["📐 Spatial Layout Segmentation\n(Docling & LayoutLMv3 Coordinates)"]
-        LayoutEngine --> BoundingBoxes["Bounding Box Normalization [0.0, 1.0]\n(Headers, Key-Values, Table Regions)"]
-    end
+ subgraph SpatialTier ["Layout & OCR Analysis Layer"]
+ Ingestion --> LayoutEngine[" Spatial Layout Segmentation\n(Docling & LayoutLMv3 Coordinates)"]
+ LayoutEngine --> BoundingBoxes["Bounding Box Normalization [0.0, 1.0]\n(Headers, Key-Values, Table Regions)"]
+ end
 
-    subgraph VisionTier ["Vision AI Extraction Layer"]
-        BoundingBoxes --> VisionLLM["👁️ Multimodal Vision LLM\n(GPT-4o Vision / Qwen2-VL)"]
-        VisionLLM --> PydanticValidator["🛡️ Strict Pydantic Schema Validator\n(Type Checking & Regex Rules)"]
-    end
+ subgraph VisionTier ["Vision AI Extraction Layer"]
+ BoundingBoxes --> VisionLLM[" Multimodal Vision LLM\n(GPT-4o Vision / Qwen2-VL)"]
+ VisionLLM --> PydanticValidator[" Strict Pydantic Schema Validator\n(Type Checking & Regex Rules)"]
+ end
 
-    subgraph TableTier ["Tabular Processing Layer"]
-        BoundingBoxes --> TableReconstructor["📊 2D Table Reconstructor\n(Cell Matrix & Arithmetic Cross-Check)"]
-        TableReconstructor --> MultiExport["Export to Markdown / CSV / JSON"]
-    end
+ subgraph TableTier ["Tabular Processing Layer"]
+ BoundingBoxes --> TableReconstructor[" 2D Table Reconstructor\n(Cell Matrix & Arithmetic Cross-Check)"]
+ TableReconstructor --> MultiExport["Export to Markdown / CSV / JSON"]
+ end
 
-    subgraph VerificationTier ["Verification Layer"]
-        PydanticValidator --> GroundingShield["🔍 Deterministic Grounding Shield\n(Token Distance vs Source OCR)"]
-        GroundingShield --> GroundingScore["✓ 100% Grounded Precision Report"]
-    end
+ subgraph VerificationTier ["Verification Layer"]
+ PydanticValidator --> GroundingShield[" Deterministic Grounding Shield\n(Token Distance vs Source OCR)"]
+ GroundingShield --> GroundingScore[" 100% Grounded Precision Report"]
+ end
 ```
 
 ---
 
-## ⚡ Key Engineering Highlights
+## Key Engineering Highlights
 
 ### 1. Spatial Coordinate Normalization ($[0.0, 1.0]$)
 Given page dimensions $W \times H$, all raw pixel coordinates $(X_0, Y_0, X_1, Y_1)$ are normalized into unit coordinates:
@@ -91,7 +91,7 @@ $$\text{Similarity}(S_{\text{ext}}, S_{\text{ocr}}) = 1.0 - \frac{\text{Levensht
 
 ---
 
-## 📊 Performance Benchmarks
+## Performance Benchmarks
 
 Results from our 50-worker concurrency benchmark harness (`tests/benchmark_extraction.py`):
 
@@ -104,7 +104,7 @@ Results from our 50-worker concurrency benchmark harness (`tests/benchmark_extra
 
 ---
 
-## 🚀 Quickstart & Local Setup
+## Quickstart & Local Setup
 
 ### 1. Clone & Setup
 ```bash
@@ -122,7 +122,7 @@ Open [**http://localhost:8000**](http://localhost:8000) in your browser to launc
 
 ---
 
-## 🧪 Running Automated Tests
+## Running Automated Tests
 
 ```bash
 ./.venv/bin/pytest
@@ -131,12 +131,12 @@ Open [**http://localhost:8000**](http://localhost:8000) in your browser to launc
 
 ---
 
-## 👥 Contributors
+## Contributors
 
 - **Vinay K R** ([@vi-nayKR](https://github.com/vi-nayKR)) — Lead Architect & AI Systems Engineer
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.

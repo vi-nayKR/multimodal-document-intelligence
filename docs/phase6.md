@@ -1,8 +1,8 @@
-# 📘 Phase 6: Production-Grade Interactive Web Console & Master Architecture
+# Phase 6: Production-Grade Interactive Web Console & Master Architecture
 
 ---
 
-## 🎯 1. Overview & Objective
+## 1. Overview & Objective
 
 In modern document intelligence workflows, business users and software engineers require an **interactive visual audit console** to inspect document extractions in real-time.
 - Visual inspection allows users to hover over extracted JSON keys and immediately see the corresponding **2D bounding box highlighted on the original document scan**.
@@ -16,28 +16,28 @@ In modern document intelligence workflows, business users and software engineers
 
 ---
 
-## 🖥️ 2. Web Console Architecture & Component Hierarchy
+## 2. Web Console Architecture & Component Hierarchy
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                 MULTIMODAL DOCUMENT INTELLIGENCE CONSOLE                    │
-├──────────────────────────────────────┬──────────────────────────────────────┤
-│  LEFT PANE: Spatial Document Canvas  │  RIGHT PANE: Structured Data Viewer  │
-├──────────────────────────────────────┼──────────────────────────────────────┤
-│  • Visual Document Scan Preview      │  • Tabs: [ JSON | Table | Grounding] │
-│  • Color-Coded Bounding Boxes:       │  • Strictly Validated Pydantic Schema│
-│    [🟩 Header: INV-2026-8891]        │  • Verified Totals & Tax Math        │
-│    [🟦 Key-Value: Vendor/Customer]   │  • Grounding Badge: 100% GROUNDED    │
-│    [🟨 Table Region: 3 Line Items]   │  • One-Click CSV / Markdown Download │
-│                                      │                                      │
-│  • Preset Document Selector:         │  • Telemetry HUD:                    │
-│    (Tax Invoice, Balance Sheet)      │    Latency: 51ms | Confidence: 0.985 │
-└──────────────────────────────────────┴──────────────────────────────────────┘
+
+ MULTIMODAL DOCUMENT INTELLIGENCE CONSOLE 
+
+ LEFT PANE: Spatial Document Canvas RIGHT PANE: Structured Data Viewer 
+
+ • Visual Document Scan Preview • Tabs: [ JSON | Table | Grounding] 
+ • Color-Coded Bounding Boxes: • Strictly Validated Pydantic Schema
+ [🟩 Header: INV-2026-8891] • Verified Totals & Tax Math 
+ [🟦 Key-Value: Vendor/Customer] • Grounding Badge: 100% GROUNDED 
+ [🟨 Table Region: 3 Line Items] • One-Click CSV / Markdown Download 
+ 
+ • Preset Document Selector: • Telemetry HUD: 
+ (Tax Invoice, Balance Sheet) Latency: 51ms | Confidence: 0.985 
+
 ```
 
 ---
 
-## 🛠️ 3. Step-by-Step Code Walkthrough
+## 3. Step-by-Step Code Walkthrough
 
 ### Step 1: Frontend Single-File Dashboard (`ui/index.html`)
 - Built with **Tailwind CSS** following the OpenAI dark theme design system (`#212121` background, `#171717` sidebar, `#10a37f` emerald highlights).
@@ -51,7 +51,7 @@ In modern document intelligence workflows, business users and software engineers
 
 ---
 
-## 🧪 4. How to Run & Experience Phase 6
+## 4. How to Run & Experience Phase 6
 
 ### 1. Launch the Server:
 ```bash
@@ -69,7 +69,7 @@ Open [**http://localhost:8000**](http://localhost:8000) to access the interactiv
 
 ---
 
-## 💡 5. Technical Questions & Architectural Explanations
+## 5. Technical Questions & Architectural Explanations
 
 ### Q: How does coordinate bounding box mapping improve human-in-the-loop (HITL) review efficiency?
 > **Answer:** When an automated system flags a low-confidence field (e.g. `confidence < 0.85`), requiring human reviewers to search through a multi-page document manually takes 30–60 seconds per field. By projecting spatial bounding box coordinates directly onto the document canvas, reviewers can instantly pinpoint the source text in $<2\text{ seconds}$, accelerating review speed by over $15\times$.

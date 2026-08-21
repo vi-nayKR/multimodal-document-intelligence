@@ -1,8 +1,8 @@
-# 📘 Phase 3: Complex Table Reconstruction, Merged Cells & Markdown/CSV Exporter
+# Phase 3: Complex Table Reconstruction, Merged Cells & Markdown/CSV Exporter
 
 ---
 
-## 🎯 1. Overview & Objective
+## 1. Overview & Objective
 
 Tabular data in business documents (e.g. multi-line purchase orders, financial income statements, fee schedules) represents the **highest error-rate category** in automated document processing.
 - Naive extractors flatten tables into unstructured strings, merging neighboring columns and failing to detect merged header cells (e.g. `Q1 2026 | Q2 2026` spanning across sub-columns).
@@ -16,28 +16,28 @@ Tabular data in business documents (e.g. multi-line purchase orders, financial i
 
 ---
 
-## 📐 2. 2D Table Grid Reconstruction Architecture
+## 2. 2D Table Grid Reconstruction Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                       TABLE STRUCTURE RECONSTRUCTION                        │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  Raw Table Block ──► [ Row/Column Grid Segmentation ]                       │
-│                                │                                            │
-│                                ▼                                            │
-│                   [ 2D Cell Matrix (Row x Col) ]                            │
-│                                │                                            │
-│       ┌────────────────────────┼────────────────────────┐                   │
-│       ▼                        ▼                        ▼                   │
-│  [ Markdown Exporter ]    [ CSV Exporter ]    [ Arithmetic Cross-Check ]    │
-│  | Col1 | Col2 | Col3 |   Col1,Col2,Col3      ✓ Qty * Price == Total        │
-│  |------|------|------|   Val1,Val2,Val3      ✓ Sum(Totals) == Subtotal     │
-└─────────────────────────────────────────────────────────────────────────────┘
+
+ TABLE STRUCTURE RECONSTRUCTION 
+
+ Raw Table Block [ Row/Column Grid Segmentation ] 
+ 
+ 
+ [ 2D Cell Matrix (Row x Col) ] 
+ 
+ 
+ 
+ [ Markdown Exporter ] [ CSV Exporter ] [ Arithmetic Cross-Check ] 
+ | Col1 | Col2 | Col3 | Col1,Col2,Col3 Qty * Price == Total 
+ |------|------|------| Val1,Val2,Val3 Sum(Totals) == Subtotal 
+
 ```
 
 ---
 
-## 🛠️ 3. Step-by-Step Code Walkthrough
+## 3. Step-by-Step Code Walkthrough
 
 ### Step 1: Table Data Models (`src/table_engine/models.py`)
 - `TableCell`: Contains `row_idx`, `col_idx`, `row_span`, `col_span`, `text`, and optional `numeric_value`.
@@ -52,7 +52,7 @@ Tabular data in business documents (e.g. multi-line purchase orders, financial i
 
 ---
 
-## 🧪 4. How to Run & Verify Phase 3
+## 4. How to Run & Verify Phase 3
 
 ### Command:
 ```bash
@@ -72,7 +72,7 @@ Tabular data in business documents (e.g. multi-line purchase orders, financial i
 
 ---
 
-## 💡 5. Technical Questions & Architectural Explanations
+## 5. Technical Questions & Architectural Explanations
 
 ### Q: Why is Markdown table representation preferred over raw JSON when passing tables to LLMs?
 > **Answer:** Markdown tables maintain clear visual row and column delimiters (`| --- |`) that align naturally with LLM pretraining data. In empirical evaluations, LLMs perform significantly better at numerical reasoning and cross-column comparisons when tables are presented as Markdown tables rather than deeply nested JSON objects, while consuming fewer tokens.

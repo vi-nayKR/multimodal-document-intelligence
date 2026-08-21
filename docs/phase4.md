@@ -1,8 +1,8 @@
-# 📘 Phase 4: Hallucination & Accuracy Grounding Shield
+# Phase 4: Hallucination & Accuracy Grounding Shield
 
 ---
 
-## 🎯 1. Overview & Objective
+## 1. Overview & Objective
 
 Large Language Models are prone to **hallucinating facts, inventing invoice numbers, or silently modifying numerical values** when generating structured outputs.
 - In production financial and legal workflows, an ungrounded hallucination in a balance sheet or invoice total creates severe compliance liabilities.
@@ -15,22 +15,22 @@ Large Language Models are prone to **hallucinating facts, inventing invoice numb
 
 ---
 
-## 📐 2. Deterministic Grounding Verification Flow
+## 2. Deterministic Grounding Verification Flow
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    DETERMINISTIC GROUNDING SHIELD FLOW                      │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  Extracted Pydantic Schema ──► [ Spatial Token Cross-Matcher ] ◄── OCR Tokens│
-│                                           │                                 │
-│                                           ▼                                 │
-│                       [ Normalized Similarity Evaluator ]                   │
-│                                           │                                 │
-│                    ┌──────────────────────┴──────────────────────┐          │
-│                    ▼                                             ▼          │
-│          ✓ GROUNDED (Match >= 0.85)                    ❌ UNGROUNDED / FLAGGED│
-│     (Field Confirmed in Source Doc)               (Potential Hallucination) │
-└─────────────────────────────────────────────────────────────────────────────┘
+
+ DETERMINISTIC GROUNDING SHIELD FLOW 
+
+ Extracted Pydantic Schema [ Spatial Token Cross-Matcher ] OCR Tokens
+ 
+ 
+ [ Normalized Similarity Evaluator ] 
+ 
+ 
+ 
+ GROUNDED (Match >= 0.85) UNGROUNDED / FLAGGED
+ (Field Confirmed in Source Doc) (Potential Hallucination) 
+
 ```
 
 ### A. Normalized Token Similarity Formula
@@ -39,7 +39,7 @@ $$\text{Similarity}(S_{\text{ext}}, S_{\text{ocr}}) = 1.0 - \frac{\text{Levensht
 
 ---
 
-## 🛠️ 3. Step-by-Step Code Walkthrough
+## 3. Step-by-Step Code Walkthrough
 
 ### Step 1: Verification Data Models (`src/verifier/grounding_shield.py`)
 - `FieldVerificationResult`: Individual field outcome (`field_name`, `extracted_value`, `is_grounded`, `confidence`, `matched_ocr_token`).
@@ -52,7 +52,7 @@ $$\text{Similarity}(S_{\text{ext}}, S_{\text{ocr}}) = 1.0 - \frac{\text{Levensht
 
 ---
 
-## 🧪 4. How to Run & Verify Phase 4
+## 4. How to Run & Verify Phase 4
 
 ### Command:
 ```bash
@@ -71,7 +71,7 @@ $$\text{Similarity}(S_{\text{ext}}, S_{\text{ocr}}) = 1.0 - \frac{\text{Levensht
 
 ---
 
-## 💡 5. Technical Questions & Architectural Explanations
+## 5. Technical Questions & Architectural Explanations
 
 ### Q: Why verify extracted fields against raw OCR tokens rather than asking the LLM to verify its own output?
 > **Answer:** LLM self-verification suffers from correlated cognitive errors—if an LLM hallucinated a number during generation, asking the same model to verify its response frequently results in repeated confirmation of the hallucinated value. A deterministic string-matching shield against spatial OCR tokens operates as an independent, deterministic arbiter with zero hallucination risk.
