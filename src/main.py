@@ -33,6 +33,27 @@ async def serve_ui():
             return f.read()
     return "<h1>Multimodal Document Intelligence Engine</h1>"
 
+from typing import List
+from pydantic import BaseModel, Field
+
+class CustomLineItemInput(BaseModel):
+    description: str = Field(..., example="Commercial Heavy Machinery Lease")
+    quantity: float = Field(..., example=2.0)
+    unit_price: float = Field(..., example=15000.0)
+
+class CustomDocumentInput(BaseModel):
+    filename: str = Field("commercial_loan_invoice.pdf", example="commercial_loan_invoice.pdf")
+    invoice_number: str = Field("INV-2026-9901", example="INV-2026-9901")
+    vendor_name: str = Field("AtlasOne Commercial Lending Partner", example="AtlasOne Commercial Lending Partner")
+    customer_name: str = Field("Apex Freight & Logistics LLC", example="Apex Freight & Logistics LLC")
+    line_items: List[CustomLineItemInput] = Field(
+        default_factory=lambda: [
+            CustomLineItemInput(description="Commercial Heavy Machinery Lease", quantity=2.0, unit_price=15000.0),
+            CustomLineItemInput(description="Credit Risk Assessment Platform Access", quantity=1.0, unit_price=2500.0)
+        ]
+    )
+    tax_rate: float = Field(0.18, example=0.18)
+
 @app.post("/v1/extract/invoice", tags=["Extraction"])
 async def extract_invoice():
     """Extracts and validates structured invoice data from an uploaded or sample document."""
@@ -43,6 +64,50 @@ async def extract_invoice():
     return {
         "document_id": doc.document_id,
         "filename": doc.filename,
+        "extraction": extracted.model_dump(),
+        "grounding": grounding_report.model_dump()
+    }
+
+@app.post("/v1/extract/custom", tags=["Extraction"])
+async def extract_custom_document(payload: CustomDocumentInput):
+    """
+    Ingests a newly provided commercial document, dynamically calculates line totals,
+    subtotal, tax, and Grand Total Amount, and runs the Grounding Shield.
+    """
+    items = [
+        {
+            "item_index": idx,
+            "description": item.description,
+            "quantity": item.quantity,
+            "unit_price": item.unit_price,
+            "total_price": round(item.quantity * item.unit_price, 2)
+        }
+        for idx, item in enumerate(payload.line_items, 1)
+    ]
+    doc = document_loader.load_custom_document(
+        filename=payload.filename,
+        invoice_number=payload.invoice_number,
+        vendor_name=payload.vendor_name,
+        customer_name=payload.customer_name,
+        line_items=items,
+        tax_rate=payload.tax_rate
+    )
+    extracted = await vision_extractor.extract_invoice(doc)
+    grounding_report = grounding_shield.verify_invoice(extracted, doc)
+    
+    return {
+        "document_id": doc.document_id,
+        "filename": doc.filename,
+        "arithmetic_breakdown": {
+            "line_item_math": [
+                f"{it['description']}: {it['quantity']} × ${it['unit_price']:,.2f} = ${it['total_price']:,.2f}"
+                for it in items
+            ],
+            "subtotal": extracted.subtotal,
+            "tax_amount": extracted.tax_amount,
+            "formula": "Grand Total = Subtotal + Tax",
+            "grand_total_calculated": extracted.total_amount
+        },
         "extraction": extracted.model_dump(),
         "grounding": grounding_report.model_dump()
     }
