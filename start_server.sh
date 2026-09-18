@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$DIR"
 
@@ -8,5 +9,5 @@ if [ ! -d ".venv" ]; then
  ./.venv/bin/pip install -r requirements.txt
 fi
 
-echo " Starting Multimodal Document Intelligence Engine on http://localhost:8000..."
+echo "Starting ReconcileAI on http://localhost:8000..."
 ./.venv/bin/uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload

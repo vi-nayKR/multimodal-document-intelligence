@@ -5,3 +5,7 @@ __pycache__/
 .DS_Store
 .env
 data/uploads/
+data/reconcile_ai.db
+data/exports/
+evals/reports/*.json
+evals/generated/

@@ -1,142 +1,101 @@
-<div align="center">
+# ReconcileAI
 
-# Multimodal Document Intelligence & Vision AI Engine
-### Spatial Layout Analysis · Vision LLM Extraction · 2D Table Reconstruction · Pydantic Validation · Anti-Hallucination Grounding
+Evidence-backed invoice and purchase-order reconciliation with Gemini, Docling, FastAPI, and deterministic financial controls.
 
-[![Python Version](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.14-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![Pydantic](https://img.shields.io/badge/Pydantic-v2.8-E92063?style=flat-square&logo=pydantic&logoColor=white)](https://docs.pydantic.dev/)
-[![Vision AI](https://img.shields.io/badge/Vision%20LLM-GPT--4o%20%7C%20Qwen2--VL-FF6B00?style=flat-square)](https://github.com/QwenLM/Qwen2-VL)
-[![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
+ReconcileAI accepts an invoice and its purchase order, extracts typed fields from both documents, matches their line items, and reports quantity, price, currency, missing-item, and arithmetic discrepancies. Every supported finding links back to a page, source excerpt, and normalized bounding box. Reviewers can correct extracted records and rerun the controls without losing the original result.
 
-**An enterprise document processing engine engineered to ingest complex multi-page PDFs, scans, and financial tables, extract strictly validated Pydantic JSON schemas, and eliminate hallucinations via deterministic spatial OCR grounding.**
+> Status: local portfolio project. The deterministic suite and Docling ingestion path are verified locally. Live extraction requires your own Gemini API key. No model-quality claim is made until the versioned held-out evaluation is run and its report is committed.
 
-[Architecture](#-system-architecture) • [Phased Implementation Guides](#-phased-implementation-guides) • [Key Capabilities](#-key-engineering-highlights) • [Benchmarks](#-performance-benchmarks) • [Quickstart](#-quickstart--local-setup) • [Contributors](#-contributors)
+## Demo flow
 
----
+1. Upload an invoice and purchase order as PDF, PNG, or JPEG.
+2. Docling parses text, tables, page numbers, and source geometry locally.
+3. Gemini returns a schema-constrained extraction. Printed instructions are treated as untrusted document content.
+4. ReconcileAI resolves evidence and runs decimal-based matching and arithmetic checks.
+5. Click a finding to render its page with the source region highlighted.
+6. Correct extracted JSON, rerun reconciliation, and export the auditable result.
 
-</div>
-
-## Executive Summary
-
-Enterprise document extraction from scanned PDFs, invoices, and financial statements suffers from high error rates: **loss of table structure, missing required fields, and silent numerical hallucinations**.
-
-The **Multimodal Document Intelligence Engine** solves this by fusing **spatial OCR layout segmentation** with **multimodal Vision LLMs** and **deterministic grounding verification**:
-- **100% Pydantic Schema Enforcement:** Guarantees typed, valid JSON outputs with zero missing mandatory fields.
-- **2D Table Structure Recognition:** Reconstructs merged cells, multi-level headers, and verifies arithmetic line item math ($\text{Qty} \times \text{Price} == \text{Total}$).
-- **Anti-Hallucination Grounding Shield:** Cross-checks every extracted scalar field against source spatial OCR tokens, flagging anomalies with $1.000$ precision.
-
----
-
-## Phased Implementation Guides
-
-The platform is engineered across 6 modular, production-tested phases with dedicated architectural documentation:
-
-| Phase | Core Capability | Documentation Guide |
-| :--- | :--- | :--- |
-| **Phase 1** | **Spatial Document Ingestion & Layout Analysis** | [**`docs/phase1.md`**](docs/phase1.md) |
-| **Phase 2** | **Vision LLM Extraction & Pydantic Schemas** | [**`docs/phase2.md`**](docs/phase2.md) |
-| **Phase 3** | **Complex Table Reconstruction & Markdown/CSV Exporter** | [**`docs/phase3.md`**](docs/phase3.md) |
-| **Phase 4** | **Deterministic Grounding & Anti-Hallucination Shield** | [**`docs/phase4.md`**](docs/phase4.md) |
-| **Phase 5** | **Concurrency Extraction Benchmark Harness** | [**`docs/phase5.md`**](docs/phase5.md) |
-| **Phase 6** | **OpenAI-Standard Interactive Web Console UI** | [**`docs/phase6.md`**](docs/phase6.md) |
-
----
-
-## System Architecture
+## Architecture
 
 ```mermaid
-flowchart TD
- DocInput[" Document Input (PDF / Scan / Image)"] --> Ingestion[" Spatial Document Ingestion & Normalization"]
-
- subgraph SpatialTier ["Layout & OCR Analysis Layer"]
- Ingestion --> LayoutEngine[" Spatial Layout Segmentation\n(Docling & LayoutLMv3 Coordinates)"]
- LayoutEngine --> BoundingBoxes["Bounding Box Normalization [0.0, 1.0]\n(Headers, Key-Values, Table Regions)"]
- end
-
- subgraph VisionTier ["Vision AI Extraction Layer"]
- BoundingBoxes --> VisionLLM[" Multimodal Vision LLM\n(GPT-4o Vision / Qwen2-VL)"]
- VisionLLM --> PydanticValidator[" Strict Pydantic Schema Validator\n(Type Checking & Regex Rules)"]
- end
-
- subgraph TableTier ["Tabular Processing Layer"]
- BoundingBoxes --> TableReconstructor[" 2D Table Reconstructor\n(Cell Matrix & Arithmetic Cross-Check)"]
- TableReconstructor --> MultiExport["Export to Markdown / CSV / JSON"]
- end
-
- subgraph VerificationTier ["Verification Layer"]
- PydanticValidator --> GroundingShield[" Deterministic Grounding Shield\n(Token Distance vs Source OCR)"]
- GroundingShield --> GroundingScore[" 100% Grounded Precision Report"]
- end
+flowchart LR
+    Upload[Invoice + purchase order] --> Store[Local file store + SQLite job]
+    Store --> Parse[Docling parser]
+    Store --> Gemini[Gemini structured extraction]
+    Parse --> Ground[Evidence resolver]
+    Gemini --> Ground
+    Ground --> Rules[Deterministic reconciliation]
+    Rules --> Review[Review workbench]
+    Review -->|correct and rerun| Rules
+    Rules --> Export[JSON audit export]
 ```
 
----
+The model extracts document meaning. Code owns matching, money arithmetic, validation, review state, and the final decision trail.
 
-## Key Engineering Highlights
+## Run locally
 
-### 1. Spatial Coordinate Normalization ($[0.0, 1.0]$)
-Given page dimensions $W \times H$, all raw pixel coordinates $(X_0, Y_0, X_1, Y_1)$ are normalized into unit coordinates:
-$$x_0 = \frac{X_0}{W}, \quad y_0 = \frac{Y_0}{H}, \quad x_1 = \frac{X_1}{W}, \quad y_1 = \frac{Y_1}{H}$$
-This ensures layout models and Vision LLMs process relative document geometry consistently across varying resolutions (72 DPI mobile camera vs 300 DPI flatbed scans).
+Python 3.12 is recommended.
 
-### 2. Strict Pydantic Domain Schemas
-Validates business entities with typed constraints and arithmetic validators:
-- `InvoiceExtractionSchema` (Invoice numbers, vendor/customer details, subtotal, tax breakdown, total amount).
-- `LineItemSchema` (Individual item indexes, unit prices, quantities, and line totals).
-- `FinancialBalanceSheetSchema` (Assets, liabilities, equity balances).
-
-### 3. Deterministic Grounding & Anti-Hallucination Shield
-Eliminates generative hallucinations by cross-checking extracted scalar values against raw spatial OCR tokens using normalized Levenshtein token distance:
-$$\text{Similarity}(S_{\text{ext}}, S_{\text{ocr}}) = 1.0 - \frac{\text{Levenshtein}(S_{\text{ext}}, S_{\text{ocr}})}{\max(|S_{\text{ext}}|, |S_{\text{ocr}}|)}$$
-
----
-
-## Performance Benchmarks
-
-Results from our 50-worker concurrency benchmark harness (`tests/benchmark_extraction.py`):
-
-| Metric | Measured Value | Industry Baseline (Vanilla OCR) | Improvement |
-| :--- | :--- | :--- | :--- |
-| **Schema Compliance Rate** | **`100.0%`** | `78.5%` | **Zero Schema Failures** |
-| **Grounding Precision Rate** | **`100.0%`** | `82.0%` | **$100\%\text{ Grounded}$** |
-| **End-to-End Latency (p50)** | **`51.2 ms`** | `1,450.0 ms` | **$28\times$ Faster** |
-| **Table Arithmetic Verification** | **`100.0% Pass`** | `64.0% Pass` | **Fully Verified Math** |
-
----
-
-## Quickstart & Local Setup
-
-### 1. Clone & Setup
 ```bash
 git clone https://github.com/vi-nayKR/multimodal-document-intelligence.git
 cd multimodal-document-intelligence
-```
-
-### 2. Start Gateway Server
-```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+cp .env.example .env
+# Add GEMINI_API_KEY to .env
 ./start_server.sh
 ```
 
-### 3. Open Interactive Web Console
-Open [**http://localhost:8000**](http://localhost:8000) in your browser to launch the split-screen document inspector!
+Open `http://localhost:8000`. The first Docling run downloads its local parsing models.
 
----
-
-## Running Automated Tests
+Docker is also supported:
 
 ```bash
-./.venv/bin/pytest
-# Ran 15 unit & integration tests -> 100% OK!
+cp .env.example .env
+docker compose up --build
 ```
 
----
+Uploaded documents and the SQLite database live under `data/`, which is excluded from Git.
 
-## Contributors
+## API
 
-- **Vinay K R** ([@vi-nayKR](https://github.com/vi-nayKR)) — Lead Architect & AI Systems Engineer
+| Endpoint | Behavior |
+| --- | --- |
+| `POST /api/v1/jobs` | Upload `invoice` and `purchase_order`; returns a persistent job ID. |
+| `GET /api/v1/jobs/{job_id}` | Poll status and retrieve the typed result. |
+| `PUT /api/v1/jobs/{job_id}/review` | Replace either reviewed extraction and rerun every control. |
+| `GET /api/v1/jobs/{job_id}/export` | Download the current result and review history. |
+| `GET /health` | Report service, model configuration, and API-key readiness. |
 
----
+Interactive OpenAPI documentation is available at `/docs`.
 
-## License
+## Evaluation
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+The repository includes a deterministic generator for 50 labeled invoice/PO pairs. Twenty development cases and thirty held-out cases use separate layout families. Scenarios cover clean matches, overcharges, quantity mismatches, and unexpected items.
+
+```bash
+.venv/bin/python scripts/generate_benchmark.py
+GEMINI_API_KEY=... .venv/bin/python scripts/run_reconciliation_eval.py --split held_out
+```
+
+The live report records discrepancy precision, recall, F1, review rate, per-case latency, and case-level errors. Generated documents and unreviewed result files stay untracked so a published report must be an intentional, reproducible artifact.
+
+For broader extraction analysis, [DocuBench](https://github.com/DocuPipe/DocuBench) provides difficult public documents and an open scorer. It is complementary to this paired reconciliation benchmark.
+
+## Verification
+
+```bash
+.venv/bin/python -m pytest -q
+.venv/bin/python scripts/generate_benchmark.py
+```
+
+The suite covers matching, overcharge impact, missing items, arithmetic failures, evidence resolution, persistence, and API contracts. Real-provider evaluation is kept out of CI to avoid nondeterministic cost.
+
+## Limits
+
+- Version 1 supports English documents, INR/USD-style monetary records, one invoice paired with one purchase order, and up to ten pages per document.
+- Ambiguous descriptions and unsupported source fields are routed to review.
+- Partial deliveries, complex discounts, tax-policy decisions, ERP writes, and payment execution are outside this version.
+- The application is a review aid. A successful run means the implemented checks found no discrepancy; it is not an authorization to pay.
+
+MIT licensed. Built by [Vinay K R](https://github.com/vi-nayKR).
