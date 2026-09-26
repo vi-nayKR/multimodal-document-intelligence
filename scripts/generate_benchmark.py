@@ -54,7 +54,7 @@ def draw_document(path: Path, title: str, number: str, items: list[dict], layout
 def main() -> None:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     rng = random.Random(20260919)
-    manifest = {"name": "reconcile-ai-benchmark", "version": "1.0.0", "seed": 20260919, "cases": []}
+    manifest = {"name": "reconcile-ai-benchmark", "version": "1.1.0", "seed": 20260919, "cases": []}
     scenarios = ("clean", "unit_price_mismatch", "quantity_mismatch", "missing_item")
     for index in range(50):
         split = "development" if index < 20 else "held_out"
@@ -106,6 +106,12 @@ def main() -> None:
             "invoice": f"{case_id}/invoice.pdf",
             "purchase_order": f"{case_id}/purchase_order.pdf",
             "expected_discrepancies": expected,
+            "invoice_items": invoice_items,
+            "purchase_order_items": po_items,
+            "row_top_fractions": [
+                round(((168 if layout % 2 else 190) + 20 + row * 19) / (A4[1] if layout % 2 else letter[1]), 5)
+                for row in range(len(invoice_items))
+            ],
         })
     (OUTPUT / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     print(f"Generated {len(manifest['cases'])} labeled pairs at {OUTPUT}")
