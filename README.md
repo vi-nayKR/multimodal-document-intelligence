@@ -60,6 +60,7 @@ docker compose up --build
 ```
 
 Uploaded documents and the SQLite database live under `data/`, which is excluded from Git.
+Uploads are limited by `MAX_UPLOAD_SIZE_MB` per file and checked for a PDF, PNG, or JPEG signature before a job is created. This is an early rejection check, not a full document safety scan; keep this prototype local and remove `data/` when its files are no longer needed.
 
 ## API
 
@@ -93,7 +94,7 @@ For broader extraction analysis, [DocuBench](https://github.com/DocuPipe/DocuBen
 .venv/bin/python scripts/generate_benchmark.py
 ```
 
-The suite covers matching, overcharge impact, missing items, arithmetic failures, evidence resolution, persistence, and API contracts. Real-provider evaluation is kept out of CI to avoid nondeterministic cost.
+The suite covers matching, overcharge impact, missing items, arithmetic failures, evidence resolution, persistence, upload rejection/cleanup, and API contracts. Real-provider evaluation is kept out of CI to avoid nondeterministic cost.
 
 ## Limits
 

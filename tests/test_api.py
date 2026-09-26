@@ -49,6 +49,35 @@ def test_upload_rejects_unsupported_files(tmp_path, monkeypatch):
     assert response.status_code == 415
 
 
+def test_upload_rejects_malformed_document(tmp_path, monkeypatch):
+    monkeypatch.setattr(main, "store", JobStore(tmp_path / "api.db"))
+    monkeypatch.setattr(main, "UPLOAD_DIR", tmp_path / "uploads")
+    response = TestClient(main.app).post(
+        "/api/v1/jobs",
+        files={
+            "invoice": ("invoice.pdf", BytesIO(b"not a PDF"), "application/pdf"),
+            "purchase_order": ("po.pdf", BytesIO(b"%PDF-1.7"), "application/pdf"),
+        },
+    )
+    assert response.status_code == 415
+    assert not (tmp_path / "uploads").exists()
+
+
+def test_oversized_second_upload_removes_first_document(tmp_path, monkeypatch):
+    monkeypatch.setattr(main, "store", JobStore(tmp_path / "api.db"))
+    monkeypatch.setattr(main, "UPLOAD_DIR", tmp_path / "uploads")
+    monkeypatch.setattr(main.settings, "MAX_UPLOAD_SIZE_MB", 0.00001)
+    response = TestClient(main.app).post(
+        "/api/v1/jobs",
+        files={
+            "invoice": ("invoice.pdf", BytesIO(b"%PDF-1.7"), "application/pdf"),
+            "purchase_order": ("po.pdf", BytesIO(b"%PDF-1.7 too large"), "application/pdf"),
+        },
+    )
+    assert response.status_code == 413
+    assert not list((tmp_path / "uploads").iterdir())
+
+
 def test_prerecorded_sample_opens_without_model_and_can_export(tmp_path, monkeypatch):
     monkeypatch.setattr(main, "store", JobStore(tmp_path / "api.db"))
     monkeypatch.setattr(main, "UPLOAD_DIR", tmp_path / "uploads")

@@ -56,10 +56,18 @@ class ReviewRequest(BaseModel):
     note: str = "Reviewer corrected extracted values"
 
 
-def _validate_upload(file: UploadFile) -> str:
+async def _validate_upload(file: UploadFile) -> str:
     suffix = Path(file.filename or "").suffix.lower()
     if suffix not in ALLOWED_SUFFIXES:
         raise HTTPException(415, "Only PDF, PNG, and JPEG documents are supported")
+    header = await file.read(8)
+    await file.seek(0)
+    if not (
+        (suffix == ".pdf" and header.startswith(b"%PDF-"))
+        or (suffix == ".png" and header == b"\x89PNG\r\n\x1a\n")
+        or (suffix in {".jpg", ".jpeg"} and header.startswith(b"\xff\xd8\xff"))
+    ):
+        raise HTTPException(415, "File contents do not match a supported document type")
     return suffix
 
 
@@ -117,15 +125,19 @@ async def create_job(
     invoice: UploadFile = File(...),
     purchase_order: UploadFile = File(...),
 ) -> dict:
-    invoice_suffix = _validate_upload(invoice)
-    po_suffix = _validate_upload(purchase_order)
+    invoice_suffix = await _validate_upload(invoice)
+    po_suffix = await _validate_upload(purchase_order)
     job_id = f"job_{uuid4().hex[:12]}"
     job_dir = UPLOAD_DIR / job_id
     job_dir.mkdir(parents=True)
     invoice_path = job_dir / f"invoice{invoice_suffix}"
     po_path = job_dir / f"purchase_order{po_suffix}"
-    await _save_upload(invoice, invoice_path)
-    await _save_upload(purchase_order, po_path)
+    try:
+        await _save_upload(invoice, invoice_path)
+        await _save_upload(purchase_order, po_path)
+    except Exception:
+        shutil.rmtree(job_dir)
+        raise
     store.create(job_id, str(invoice_path), str(po_path))
     background_tasks.add_task(_process_job, job_id)
     return {"job_id": job_id, "status": "queued"}
