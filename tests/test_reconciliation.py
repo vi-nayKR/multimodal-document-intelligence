@@ -1,3 +1,5 @@
+from src.extractor.gemini_extractor import attach_evidence
+from src.parser.real_document_parser import ParsedArtifact
 from src.reconciliation.engine import reconcile_documents
 from src.reconciliation.models import (
     DiscrepancyType,
@@ -67,6 +69,22 @@ def test_missing_and_ambiguous_items_require_review():
 
     assert result.summary.status == "review_required"
     assert any(d.type == DiscrepancyType.MISSING_ITEM and d.requires_review for d in result.discrepancies)
+
+
+def test_missing_source_evidence_requires_review():
+    invoice = attach_evidence(
+        document(DocumentType.INVOICE),
+        ParsedArtifact(text="", page_count=1, evidence=[]),
+    )
+
+    result = reconcile_documents(invoice, document(DocumentType.PURCHASE_ORDER))
+
+    assert result.summary.status == "review_required"
+    assert any("No source evidence" in flag for flag in invoice.review_flags)
+    assert any(
+        d.type == DiscrepancyType.UNSUPPORTED_FIELD and d.requires_review
+        for d in result.discrepancies
+    )
 
 
 def test_document_arithmetic_error_is_reported():

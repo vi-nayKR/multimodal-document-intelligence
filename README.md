@@ -61,6 +61,7 @@ docker compose up --build
 
 Uploaded documents and the SQLite database live under `data/`, which is excluded from Git.
 Uploads are limited by `MAX_UPLOAD_SIZE_MB` per file and checked for a PDF, PNG, or JPEG signature before a job is created. This is an early rejection check, not a full document safety scan; keep this prototype local and remove `data/` when its files are no longer needed.
+Gemini requests use a 60-second HTTP timeout (`GEMINI_TIMEOUT_MS`) and do not retry timed-out or failed calls.
 
 ## API
 

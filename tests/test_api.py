@@ -1,8 +1,11 @@
+import asyncio
+import threading
 from io import BytesIO
 
 from fastapi.testclient import TestClient
 
 import src.main as main
+from src.parser.real_document_parser import ParsedArtifact
 from src.reconciliation.engine import reconcile_documents
 from src.reconciliation.models import DocumentExtraction, DocumentType, ExtractedLineItem
 from src.storage import JobStore
@@ -124,3 +127,44 @@ def test_review_reruns_controls_and_records_audit(tmp_path, monkeypatch):
     assert audit["sequence"] == 1
     assert audit["before"]["invoice"]["line_items"][0]["unit_price"] == 10
     assert audit["after"]["invoice"]["line_items"][0]["unit_price"] == 12
+
+
+def test_lifespan_resumes_incomplete_job(tmp_path, monkeypatch):
+    store = JobStore(tmp_path / "api.db")
+    store.create("job-restart", "invoice.pdf", "po.pdf")
+    store.update("job-restart", status="processing")
+    resumed = threading.Event()
+
+    async def process(job_id):
+        store.update(job_id, status="completed")
+        resumed.set()
+
+    monkeypatch.setattr(main, "store", store)
+    monkeypatch.setattr(main, "_process_job", process)
+
+    with TestClient(main.app):
+        assert resumed.wait(timeout=2)
+
+    assert store.get("job-restart")["status"] == "completed"
+
+
+def test_provider_timeout_is_persisted_as_job_failure(tmp_path, monkeypatch):
+    store = JobStore(tmp_path / "api.db")
+    store.create("job-timeout", "invoice.pdf", "po.pdf")
+
+    async def parse(_):
+        return ParsedArtifact(text="", page_count=1, evidence=[])
+
+    class TimeoutExtractor:
+        async def extract(self, *_):
+            raise TimeoutError("provider request timed out")
+
+    monkeypatch.setattr(main, "store", store)
+    monkeypatch.setattr(main, "parse_document", parse)
+    monkeypatch.setattr(main, "GeminiDocumentExtractor", TimeoutExtractor)
+
+    asyncio.run(main._process_job("job-timeout"))
+
+    job = store.get("job-timeout")
+    assert job["status"] == "failed"
+    assert "provider request timed out" in job["error"]

@@ -1,4 +1,7 @@
-from src.extractor.gemini_extractor import attach_evidence
+import pytest
+
+from config import settings
+from src.extractor.gemini_extractor import GeminiDocumentExtractor, attach_evidence
 from src.parser.real_document_parser import EvidenceCandidate, ParsedArtifact
 from src.reconciliation.models import DocumentExtraction, DocumentType, ExtractedLineItem
 
@@ -28,3 +31,33 @@ def test_evidence_is_resolved_from_parser_coordinates():
     assert grounded.field_evidence["document_number"].bbox == (0.1, 0.1, 0.8, 0.2)
     assert grounded.line_items[0].evidence.page == 1
     assert not grounded.review_flags
+
+
+def test_gemini_request_timeout_is_bounded_and_propagated(tmp_path, monkeypatch):
+    from google import genai
+
+    captured = {}
+
+    class Models:
+        def generate_content(self, **_):
+            raise TimeoutError("provider request timed out")
+
+    class Client:
+        def __init__(self, **kwargs):
+            captured.update(kwargs)
+            self.models = Models()
+
+    monkeypatch.setattr(genai, "Client", Client)
+    path = tmp_path / "invoice.pdf"
+    path.write_bytes(b"%PDF-1.7")
+
+    with pytest.raises(TimeoutError, match="provider request timed out"):
+        GeminiDocumentExtractor(api_key="test-key")._extract_sync(
+            path,
+            "invoice-1",
+            DocumentType.INVOICE,
+            ParsedArtifact(text="", page_count=1, evidence=[]),
+        )
+
+    assert captured["http_options"].timeout == settings.GEMINI_TIMEOUT_MS
+    assert captured["http_options"].retry_options.attempts == 1

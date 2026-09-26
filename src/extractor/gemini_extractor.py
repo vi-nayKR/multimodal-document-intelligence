@@ -61,7 +61,13 @@ Locally parsed text, supplied as additional evidence:
 ---
 {parsed.text[:100_000]}
 ---"""
-        client = genai.Client(api_key=self.api_key)
+        client = genai.Client(
+            api_key=self.api_key,
+            http_options=types.HttpOptions(
+                timeout=settings.GEMINI_TIMEOUT_MS,
+                retry_options=types.HttpRetryOptions(attempts=1),
+            ),
+        )
         response = client.models.generate_content(
             model=self.model,
             contents=[
