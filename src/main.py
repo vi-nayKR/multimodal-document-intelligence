@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import asyncio
 import io
+import json
+import shutil
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime
 from pathlib import Path
@@ -23,6 +25,7 @@ UPLOAD_DIR = settings.DATA_DIR / "uploads"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 store = JobStore(settings.DATABASE_PATH)
 ALLOWED_SUFFIXES = {".pdf", ".png", ".jpg", ".jpeg"}
+SAMPLE_DIR = Path(__file__).resolve().parent.parent / "demo"
 
 
 @asynccontextmanager
@@ -131,6 +134,22 @@ async def create_job(
 @app.get("/api/v1/jobs", tags=["Reconciliation"])
 async def list_jobs() -> list[dict]:
     return store.list_recent()
+
+
+@app.post("/api/v1/sample", status_code=201, tags=["Reconciliation"])
+async def create_sample() -> dict:
+    """Open a prerecorded fictional case without parsing or a model call."""
+    job_id = f"sample_{uuid4().hex[:12]}"
+    job_dir = UPLOAD_DIR / job_id
+    job_dir.mkdir(parents=True)
+    invoice_path = job_dir / "invoice.pdf"
+    po_path = job_dir / "purchase_order.pdf"
+    shutil.copyfile(SAMPLE_DIR / "invoice.pdf", invoice_path)
+    shutil.copyfile(SAMPLE_DIR / "purchase_order.pdf", po_path)
+    store.create(job_id, str(invoice_path), str(po_path))
+    result = json.loads((SAMPLE_DIR / "result.json").read_text(encoding="utf-8"))
+    store.update(job_id, status="completed", result=result)
+    return {"job_id": job_id, "status": "completed", "mode": "prerecorded_sample"}
 
 
 @app.get("/api/v1/jobs/{job_id}", tags=["Reconciliation"])

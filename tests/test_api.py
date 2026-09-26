@@ -49,6 +49,23 @@ def test_upload_rejects_unsupported_files(tmp_path, monkeypatch):
     assert response.status_code == 415
 
 
+def test_prerecorded_sample_opens_without_model_and_can_export(tmp_path, monkeypatch):
+    monkeypatch.setattr(main, "store", JobStore(tmp_path / "api.db"))
+    monkeypatch.setattr(main, "UPLOAD_DIR", tmp_path / "uploads")
+    client = TestClient(main.app)
+    response = client.post("/api/v1/sample")
+
+    assert response.status_code == 201
+    assert response.json()["mode"] == "prerecorded_sample"
+    job_id = response.json()["job_id"]
+    result = client.get(f"/api/v1/jobs/{job_id}").json()["result"]
+    assert {item["type"] for item in result["discrepancies"]} == {
+        "unit_price_mismatch", "line_total_mismatch",
+    }
+    assert client.get(f"/api/v1/jobs/{job_id}/documents/invoice/preview").status_code == 200
+    assert client.get(f"/api/v1/jobs/{job_id}/export").status_code == 200
+
+
 def test_review_reruns_controls_and_records_audit(tmp_path, monkeypatch):
     store = JobStore(tmp_path / "api.db")
     monkeypatch.setattr(main, "store", store)

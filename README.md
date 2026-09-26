@@ -8,6 +8,10 @@ ReconcileAI accepts an invoice and its purchase order, extracts typed fields fro
 
 ## Demo flow
 
+For a no-key walkthrough, start the server and click **Open prerecorded sample**. It loads fictional PDFs and a frozen extraction result without calling Gemini or Docling. Click a finding to highlight its source, correct the extracted JSON, then export the review trail. Regenerate the fixture with `python scripts/generate_sample.py`. This sample demonstrates the UI and deterministic controls; it is not a model-quality measurement.
+
+![Prerecorded invoice discrepancy with the matching source row highlighted beside the findings](demo/workbench.png)
+
 1. Upload an invoice and purchase order as PDF, PNG, or JPEG.
 2. Docling parses text, tables, page numbers, and source geometry locally.
 3. Gemini returns a schema-constrained extraction. Printed instructions are treated as untrusted document content.

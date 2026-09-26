@@ -15,7 +15,7 @@ OUTPUT = ROOT / "evals" / "generated"
 
 def draw_document(path: Path, title: str, number: str, items: list[dict], layout: int) -> None:
     page_size = A4 if layout % 2 else letter
-    canvas = Canvas(str(path), pagesize=page_size)
+    canvas = Canvas(str(path), pagesize=page_size, invariant=1)
     width, height = page_size
     left = 46 if layout < 3 else 75
     canvas.setFont("Helvetica-Bold", 19)
