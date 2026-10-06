@@ -9,3 +9,8 @@ data/reconcile_ai.db
 data/exports/
 evals/reports/*.json
 evals/generated/
+evals/cord/
+# Local public-data/OCR/provider caches; publish derived metrics and hashes only.
+results/raw/
+results/parsed/
+.gradio/

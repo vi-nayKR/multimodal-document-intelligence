@@ -32,7 +32,80 @@
     "subtotal": 5500.0,
     "tax_amount": null,
     "total_amount": 5500.0,
-    "field_evidence": {},
+    "field_evidence": {
+      "document_number": {
+        "document_id": "sample_invoice",
+        "page": 1,
+        "text": "INV-SAMPLE",
+        "bbox": [
+          0.7738190678863262,
+          0.06262098976606556,
+          0.873100826976739,
+          0.07139887840103487
+        ],
+        "confidence": 1.0
+      },
+      "vendor_name": {
+        "document_id": "sample_invoice",
+        "page": 1,
+        "text": "Vendor: Kaveri Network Systems",
+        "bbox": [
+          0.12605926435930706,
+          0.0935038926243783,
+          0.3717941770707357,
+          0.10463368239090787
+        ],
+        "confidence": 1.0
+      },
+      "buyer_name": {
+        "document_id": "sample_invoice",
+        "page": 1,
+        "text": "Buyer: Meridian Operations Pvt Ltd",
+        "bbox": [
+          0.12721839547749178,
+          0.11249693878039269,
+          0.38620764698433663,
+          0.1236385456883311
+        ],
+        "confidence": 1.0
+      },
+      "currency": {
+        "document_id": "sample_invoice",
+        "page": 1,
+        "text": "Currency: INR",
+        "bbox": [
+          0.12683201416590492,
+          0.13151361921922478,
+          0.23217816680927245,
+          0.14264340898575434
+        ],
+        "confidence": 1.0
+      },
+      "subtotal": {
+        "document_id": "sample_invoice",
+        "page": 1,
+        "text": "Subtotal: 5500.00",
+        "bbox": [
+          0.7364414213274999,
+          0.25504523065247586,
+          0.8731848011815858,
+          0.2638350089266541
+        ],
+        "confidence": 1.0
+      },
+      "total_amount": {
+        "document_id": "sample_invoice",
+        "page": 1,
+        "text": "Total: 5500.00",
+        "bbox": [
+          0.7632525188416481,
+          0.2753448321610681,
+          0.8731848011815858,
+          0.2840157865409574
+        ],
+        "confidence": 1.0
+      }
+    },
     "review_flags": [],
     "provider_metadata": {}
   },
@@ -69,7 +142,80 @@
     "subtotal": 5000.0,
     "tax_amount": null,
     "total_amount": 5000.0,
-    "field_evidence": {},
+    "field_evidence": {
+      "document_number": {
+        "document_id": "sample_purchase_order",
+        "page": 1,
+        "text": "PO-SAMPLE",
+        "bbox": [
+          0.7772796458933897,
+          0.0626091726246567,
+          0.873100826976739,
+          0.07139887840103487
+        ],
+        "confidence": 1.0
+      },
+      "vendor_name": {
+        "document_id": "sample_purchase_order",
+        "page": 1,
+        "text": "Vendor: Kaveri Network Systems",
+        "bbox": [
+          0.12605926435930706,
+          0.0935038926243783,
+          0.3717941770707357,
+          0.10463368239090787
+        ],
+        "confidence": 1.0
+      },
+      "buyer_name": {
+        "document_id": "sample_purchase_order",
+        "page": 1,
+        "text": "Buyer: Meridian Operations Pvt Ltd",
+        "bbox": [
+          0.12721839547749178,
+          0.11249693878039269,
+          0.38620764698433663,
+          0.1236385456883311
+        ],
+        "confidence": 1.0
+      },
+      "currency": {
+        "document_id": "sample_purchase_order",
+        "page": 1,
+        "text": "Currency: INR",
+        "bbox": [
+          0.12683201416590492,
+          0.13151361921922478,
+          0.23217816680927245,
+          0.14264340898575434
+        ],
+        "confidence": 1.0
+      },
+      "subtotal": {
+        "document_id": "sample_purchase_order",
+        "page": 1,
+        "text": "Subtotal: 5000.00",
+        "bbox": [
+          0.7364414213274999,
+          0.25504523065247586,
+          0.8731848011815858,
+          0.2638350089266541
+        ],
+        "confidence": 1.0
+      },
+      "total_amount": {
+        "document_id": "sample_purchase_order",
+        "page": 1,
+        "text": "Total: 5000.00",
+        "bbox": [
+          0.7632525188416481,
+          0.2753448321610681,
+          0.8731848011815858,
+          0.2840157865409574
+        ],
+        "confidence": 1.0
+      }
+    },
     "review_flags": [],
     "provider_metadata": {}
   },

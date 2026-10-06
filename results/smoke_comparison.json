@@ -1,0 +1,5696 @@
+{
+  "run_at_utc": "2026-10-06T07:48:51.440720+00:00",
+  "commit": "a0826bd58918316fe40735cb5cf2045e44466124",
+  "source_sha256": {
+    "scripts/run_real_eval.py": "38e501b8b48eebecf3e4b6dd986f27cd6764dfe650571e0e5e5476b4c45fa8d8",
+    "src/extractor/gemini_extractor.py": "219e4af311f5daeda6033406c8f133a6044120099494d3c1d44a72dd573b84bf",
+    "src/extractor/gemini_api.py": "6782d63e92c91be1658282764da8a28513961025b0658f3d159b2f46b828300c",
+    "src/extractor/open_vlm.py": "d5d463127373f39915fb239519ce983bcdd941878b3cdcfc4f9a976654cf0c06",
+    "src/parser/real_document_parser.py": "8ec16702475b3256c0a8c155d7d43fc8075bb8f24480c0f314a2cb369b540f77"
+  },
+  "dataset_sha256": "256cbd27c95281417ef9154222c8f3a0ac1824c6da8df701d098d4a852bdf887",
+  "dataset": "naver-clova-ix/cord-v2",
+  "environment": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "gemini_model": "gemini-3.1-flash-lite",
+  "vlm_provider": "groq",
+  "vlm_model": "qwen/qwen3.8-27b",
+  "judge": {
+    "model": "gemini-3.1-flash-lite",
+    "temperature": 0,
+    "status": "enabled",
+    "limitation": "Same-family judge may prefer Gemini outputs; diagnostic only."
+  },
+  "requested_cases": [
+    "cord_development_000",
+    "cord_development_001",
+    "cord_development_002",
+    "cord_held_out_000",
+    "cord_held_out_001"
+  ],
+  "requested_backends": [
+    "gemini",
+    "qwen",
+    "docling_text_llm"
+  ],
+  "target_review_rate": 0.2,
+  "default_threshold": 0.85,
+  "scope": "smoke",
+  "provider_catalog": {
+    "lookup_at_utc": "2026-10-06T07:48:51.428343+00:00",
+    "provider": "groq",
+    "endpoint": "https://api.groq.com/openai/v1",
+    "source": "https://api.groq.com/openai/v1/models",
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen/Qwen3.8-27B",
+    "pricing": {
+      "prompt": "8.000000000000001e-07",
+      "completion": "4e-06"
+    },
+    "price_source": "configured per-million-token rates",
+    "context_length": 131072,
+    "input_modalities": [
+      "text",
+      "image"
+    ],
+    "vision_status": "catalogue advertises images",
+    "created": 1786984846,
+    "max_images_per_request": 3
+  },
+  "free_tier_declared": true,
+  "budget_basis": "paid-equivalent token cost even for declared free-tier keys",
+  "cost_rates": {
+    "gemini_input": 0.25,
+    "gemini_output": 1.5,
+    "qwen_input_per_token": "8.000000000000001e-07",
+    "qwen_output_per_token": "4e-06"
+  },
+  "backends": {
+    "gemini": {
+      "status": "measured",
+      "held_out": {
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "per_field": {
+          "description": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "quantity": {
+            "tp": 1,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.25,
+            "recall": 1.0,
+            "f1": 0.4
+          },
+          "unit_price": {
+            "tp": 0,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": null,
+            "f1": 0.0
+          },
+          "line_total": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "subtotal": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666
+          },
+          "tax_amount": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "total_amount": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          }
+        },
+        "micro": {
+          "tp": 13,
+          "fp": 8,
+          "fn": 0,
+          "precision": 0.6190476190476191,
+          "recall": 1.0,
+          "f1": 0.7647058823529411
+        },
+        "latency_p50_seconds": 31.606547900000805,
+        "latency_p95_seconds": 32.04573380000147,
+        "estimated_cost_per_document_usd": 0.0,
+        "paid_equivalent_cost_per_document_usd": 0.0006575000000000001,
+        "review": {
+          "threshold": 0.0,
+          "review_rate": 1.0,
+          "error_detection_precision": 1.0,
+          "error_detection_recall": 1.0,
+          "accepted_document_accuracy": null
+        },
+        "default_review": {
+          "threshold": 0.85,
+          "review_rate": 1.0,
+          "error_detection_precision": 1.0,
+          "error_detection_recall": 1.0,
+          "accepted_document_accuracy": null
+        }
+      },
+      "calibration": {
+        "selected": {
+          "threshold": 0.0,
+          "review_rate": 1.0,
+          "error_detection_precision": 0.6666666666666666,
+          "error_detection_recall": 1.0,
+          "accepted_document_accuracy": null,
+          "target_review_rate": 0.2,
+          "target_achieved": false,
+          "tie_policy": "strict score < threshold; do not split equal-confidence documents",
+          "curve": [
+            {
+              "threshold": 0.0,
+              "review_rate": 1.0,
+              "error_detection_precision": 0.6666666666666666,
+              "error_detection_recall": 1.0,
+              "accepted_document_accuracy": null
+            },
+            {
+              "threshold": 5e-324,
+              "review_rate": 1.0,
+              "error_detection_precision": 0.6666666666666666,
+              "error_detection_recall": 1.0,
+              "accepted_document_accuracy": null
+            },
+            {
+              "threshold": 1.0,
+              "review_rate": 1.0,
+              "error_detection_precision": 0.6666666666666666,
+              "error_detection_recall": 1.0,
+              "accepted_document_accuracy": null
+            }
+          ]
+        },
+        "fit_split": "development",
+        "evaluation_split": "held_out",
+        "field": {
+          "ece": 0.38095238095238093,
+          "n": 21,
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 14,
+              "mean_confidence": 0.0,
+              "accuracy": 0.5
+            },
+            {
+              "lower": 0.1,
+              "upper": 0.2,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.3,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.3,
+              "upper": 0.4,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.7,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.7,
+              "upper": 0.8,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 7,
+              "mean_confidence": 1.0,
+              "accuracy": 0.8571428571428571
+            }
+          ]
+        },
+        "document": {
+          "ece": 0.0,
+          "n": 2,
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 2,
+              "mean_confidence": 0.0,
+              "accuracy": 0.0
+            },
+            {
+              "lower": 0.1,
+              "upper": 0.2,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.3,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.3,
+              "upper": 0.4,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.7,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.7,
+              "upper": 0.8,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            }
+          ]
+        }
+      }
+    },
+    "qwen": {
+      "status": "measured",
+      "held_out": {
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "per_field": {
+          "description": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "quantity": {
+            "tp": 1,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.25,
+            "recall": 1.0,
+            "f1": 0.4
+          },
+          "unit_price": {
+            "tp": 0,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": null,
+            "f1": 0.0
+          },
+          "line_total": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 1,
+            "precision": 0.75,
+            "recall": 0.75,
+            "f1": 0.75
+          },
+          "subtotal": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "tax_amount": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "total_amount": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 1,
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5
+          }
+        },
+        "micro": {
+          "tp": 9,
+          "fp": 12,
+          "fn": 4,
+          "precision": 0.42857142857142855,
+          "recall": 0.6923076923076923,
+          "f1": 0.5294117647058824
+        },
+        "latency_p50_seconds": 27.369204500000706,
+        "latency_p95_seconds": 50.834028399998715,
+        "estimated_cost_per_document_usd": 0.0027576000000000002,
+        "paid_equivalent_cost_per_document_usd": 0.0027576000000000002,
+        "review": {
+          "threshold": 0.0,
+          "review_rate": 1.0,
+          "error_detection_precision": 1.0,
+          "error_detection_recall": 1.0,
+          "accepted_document_accuracy": null
+        },
+        "default_review": {
+          "threshold": 0.85,
+          "review_rate": 1.0,
+          "error_detection_precision": 1.0,
+          "error_detection_recall": 1.0,
+          "accepted_document_accuracy": null
+        }
+      },
+      "calibration": {
+        "selected": {
+          "threshold": 0.0,
+          "review_rate": 1.0,
+          "error_detection_precision": 0.6666666666666666,
+          "error_detection_recall": 1.0,
+          "accepted_document_accuracy": null,
+          "target_review_rate": 0.2,
+          "target_achieved": false,
+          "tie_policy": "strict score < threshold; do not split equal-confidence documents",
+          "curve": [
+            {
+              "threshold": 0.0,
+              "review_rate": 1.0,
+              "error_detection_precision": 0.6666666666666666,
+              "error_detection_recall": 1.0,
+              "accepted_document_accuracy": null
+            },
+            {
+              "threshold": 5e-324,
+              "review_rate": 1.0,
+              "error_detection_precision": 0.6666666666666666,
+              "error_detection_recall": 1.0,
+              "accepted_document_accuracy": null
+            },
+            {
+              "threshold": 1.0,
+              "review_rate": 1.0,
+              "error_detection_precision": 0.6666666666666666,
+              "error_detection_recall": 1.0,
+              "accepted_document_accuracy": null
+            }
+          ]
+        },
+        "fit_split": "development",
+        "evaluation_split": "held_out",
+        "field": {
+          "ece": 0.42857142857142855,
+          "n": 21,
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 9,
+              "mean_confidence": 0.0,
+              "accuracy": 0.3333333333333333
+            },
+            {
+              "lower": 0.1,
+              "upper": 0.2,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.3,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.3,
+              "upper": 0.4,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.7,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.7,
+              "upper": 0.8,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 12,
+              "mean_confidence": 1.0,
+              "accuracy": 0.5
+            }
+          ]
+        },
+        "document": {
+          "ece": 0.0,
+          "n": 2,
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 2,
+              "mean_confidence": 0.0,
+              "accuracy": 0.0
+            },
+            {
+              "lower": 0.1,
+              "upper": 0.2,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.3,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.3,
+              "upper": 0.4,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.7,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.7,
+              "upper": 0.8,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            }
+          ]
+        }
+      }
+    },
+    "docling_text_llm": {
+      "status": "measured",
+      "held_out": {
+        "attempted": 2,
+        "completed": 2,
+        "failed": 0,
+        "per_field": {
+          "description": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          "quantity": {
+            "tp": 1,
+            "fp": 3,
+            "fn": 0,
+            "precision": 0.25,
+            "recall": 1.0,
+            "f1": 0.4
+          },
+          "unit_price": {
+            "tp": 0,
+            "fp": 4,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": null,
+            "f1": 0.0
+          },
+          "line_total": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 1,
+            "precision": 0.75,
+            "recall": 0.75,
+            "f1": 0.75
+          },
+          "subtotal": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "tax_amount": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "total_amount": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 1,
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5
+          }
+        },
+        "micro": {
+          "tp": 9,
+          "fp": 13,
+          "fn": 4,
+          "precision": 0.4090909090909091,
+          "recall": 0.6923076923076923,
+          "f1": 0.5142857142857142
+        },
+        "latency_p50_seconds": 36.982531700001346,
+        "latency_p95_seconds": 54.832990599998084,
+        "estimated_cost_per_document_usd": 0.0,
+        "paid_equivalent_cost_per_document_usd": 0.000391,
+        "review": {
+          "threshold": 0.0,
+          "review_rate": 0.5,
+          "error_detection_precision": 1.0,
+          "error_detection_recall": 0.5,
+          "accepted_document_accuracy": 0.0
+        },
+        "default_review": {
+          "threshold": 0.85,
+          "review_rate": 0.5,
+          "error_detection_precision": 1.0,
+          "error_detection_recall": 0.5,
+          "accepted_document_accuracy": 0.0
+        }
+      },
+      "calibration": {
+        "selected": {
+          "threshold": 0.0,
+          "review_rate": 1.0,
+          "error_detection_precision": 1.0,
+          "error_detection_recall": 1.0,
+          "accepted_document_accuracy": null,
+          "target_review_rate": 0.2,
+          "target_achieved": false,
+          "tie_policy": "strict score < threshold; do not split equal-confidence documents",
+          "curve": [
+            {
+              "threshold": 0.0,
+              "review_rate": 1.0,
+              "error_detection_precision": 1.0,
+              "error_detection_recall": 1.0,
+              "accepted_document_accuracy": null
+            },
+            {
+              "threshold": 5e-324,
+              "review_rate": 1.0,
+              "error_detection_precision": 1.0,
+              "error_detection_recall": 1.0,
+              "accepted_document_accuracy": null
+            },
+            {
+              "threshold": 1.0,
+              "review_rate": 1.0,
+              "error_detection_precision": 1.0,
+              "error_detection_recall": 1.0,
+              "accepted_document_accuracy": null
+            }
+          ]
+        },
+        "fit_split": "development",
+        "evaluation_split": "held_out",
+        "field": {
+          "ece": 0.45454545454545453,
+          "n": 22,
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 9,
+              "mean_confidence": 0.0,
+              "accuracy": 0.3333333333333333
+            },
+            {
+              "lower": 0.1,
+              "upper": 0.2,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.3,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.3,
+              "upper": 0.4,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.7,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.7,
+              "upper": 0.8,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 13,
+              "mean_confidence": 1.0,
+              "accuracy": 0.46153846153846156
+            }
+          ]
+        },
+        "document": {
+          "ece": 0.5,
+          "n": 2,
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 1,
+              "mean_confidence": 0.0,
+              "accuracy": 0.0
+            },
+            {
+              "lower": 0.1,
+              "upper": 0.2,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.3,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.3,
+              "upper": 0.4,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.7,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.7,
+              "upper": 0.8,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 0,
+              "mean_confidence": null,
+              "accuracy": null
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 1,
+              "mean_confidence": 1.0,
+              "accuracy": 0.0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "rows": [
+    {
+      "case_id": "cord_development_000",
+      "split": "development",
+      "backend": "gemini",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "total_amount",
+          "confidence": 0.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            16500.0,
+            13000.0,
+            16000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "subtotal",
+          "expected": [],
+          "predicted": [
+            45500.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "REAL GANACHE",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "EGG TART",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "PIZZA TOAST",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 16500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 13000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 16000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 16500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 13000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 16000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 45500.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "tax_amount": [],
+        "total_amount": [
+          {
+            "value": 45500.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "input_tokens": 1237,
+        "output_tokens": 282,
+        "input_mode": "vision_and_docling_text",
+        "cache_hit": 1,
+        "provider_latency_seconds": 4.384183199999825,
+        "response_cached_at_utc": "2026-10-06T07:30:49.933323+00:00",
+        "temperature": 0,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "paid_equivalent_usd": 0.00073225,
+        "estimated_cost_usd": 0.0
+      },
+      "cost_usd": 0.0,
+      "latency_seconds": 35.15285009999934,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model hallucinated unit_price and subtotal values that were not present in the OCR text, likely attempting to infer them from the line totals and total amount."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:31:18.902801+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.00051925
+      }
+    },
+    {
+      "case_id": "cord_development_001",
+      "split": "development",
+      "backend": "gemini",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "tax_amount",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "total_amount",
+          "confidence": 0.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            23000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "subtotal",
+          "expected": [],
+          "predicted": [
+            23000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "tax_amount",
+          "expected": [],
+          "predicted": [
+            0.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "Kopi Susu Kolonel",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "tax_amount": [
+          {
+            "value": 0.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "total_amount": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "input_tokens": 1227,
+        "output_tokens": 168,
+        "input_mode": "vision_and_docling_text",
+        "cache_hit": 1,
+        "provider_latency_seconds": 61.773864499999036,
+        "response_cached_at_utc": "2026-10-06T07:32:20.727319+00:00",
+        "temperature": 0,
+        "http_attempts": 2,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 2,
+        "paid_equivalent_usd": 0.00055875,
+        "estimated_cost_usd": 0.0
+      },
+      "cost_usd": 0.0,
+      "latency_seconds": 70.21445529999983,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model incorrectly inferred values for unit_price, subtotal, and tax_amount that were not present in the ground truth. These fields were hallucinated based on the line total and total amount, rather than being extracted from the document structure."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:32:50.683424+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.000402
+      }
+    },
+    {
+      "case_id": "cord_development_002",
+      "split": "development",
+      "backend": "gemini",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "tax_amount",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "total_amount",
+          "confidence": 0.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [],
+      "predictions": {
+        "description": [
+          {
+            "value": "S-Ovaltine 50%",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 20000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 20000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 18181.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "tax_amount": [
+          {
+            "value": 1818.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "total_amount": [
+          {
+            "value": 20000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": true,
+      "provider_metadata": {
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "input_tokens": 1272,
+        "output_tokens": 167,
+        "input_mode": "vision_and_docling_text",
+        "cache_hit": 1,
+        "provider_latency_seconds": 30.463291500000196,
+        "response_cached_at_utc": "2026-10-06T07:33:21.163812+00:00",
+        "temperature": 0,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "paid_equivalent_usd": 0.0005685,
+        "estimated_cost_usd": 0.0
+      },
+      "cost_usd": 0.0,
+      "latency_seconds": 35.32548999999926,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring"
+    },
+    {
+      "case_id": "cord_held_out_000",
+      "split": "held_out",
+      "backend": "gemini",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "tax_amount",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "total_amount",
+          "confidence": 0.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            60000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "-TICKET CP",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 2.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 60000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 60000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 60000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "tax_amount": [
+          {
+            "value": 5455.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "total_amount": [
+          {
+            "value": 60000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "input_tokens": 1316,
+        "output_tokens": 173,
+        "input_mode": "vision_and_docling_text",
+        "cache_hit": 1,
+        "provider_latency_seconds": 5.391678400001183,
+        "response_cached_at_utc": "2026-10-06T07:33:52.791236+00:00",
+        "temperature": 0,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "paid_equivalent_usd": 0.0005885,
+        "estimated_cost_usd": 0.0
+      },
+      "cost_usd": 0.0,
+      "latency_seconds": 31.606547900000805,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model incorrectly inferred a unit price and line total by interpreting the total amount (60.000) as a per-unit value, despite the document structure indicating a flat total for the quantity of 2. The OCR output is ambiguous due to the table formatting, leading the model to hallucinate values for fields that were expected to be empty or different."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:34:21.141883+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.00048
+      }
+    },
+    {
+      "case_id": "cord_held_out_001",
+      "split": "held_out",
+      "backend": "gemini",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "quantity",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "quantity",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "total_amount",
+          "confidence": 1.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "quantity",
+          "expected": [],
+          "predicted": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            17500.0,
+            46000.0,
+            27500.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "subtotal",
+          "expected": [],
+          "predicted": [
+            91000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "J.STB PROMO",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "Y.B.BAT",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "Y.BASO PROM",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 17500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 46000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 27500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 17500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 46000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 27500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 91000.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "91000",
+              "bbox": [
+                0.552615,
+                0.640125,
+                0.854163,
+                0.683437
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "tax_amount": [],
+        "total_amount": [
+          {
+            "value": 91000.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "91000",
+              "bbox": [
+                0.552615,
+                0.640125,
+                0.854163,
+                0.683437
+              ],
+              "confidence": 1.0
+            }
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "input_tokens": 1208,
+        "output_tokens": 283,
+        "input_mode": "vision_and_docling_text",
+        "cache_hit": 1,
+        "provider_latency_seconds": 25.745105600000898,
+        "response_cached_at_utc": "2026-10-06T07:34:53.223204+00:00",
+        "temperature": 0,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "paid_equivalent_usd": 0.0007265,
+        "estimated_cost_usd": 0.0
+      },
+      "cost_usd": 0.0,
+      "latency_seconds": 32.04573380000147,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model incorrectly inferred quantities and unit prices where none were present in the source text, and misclassified the total amount as a subtotal. The extraction logic failed to correctly map the line items to their respective totals, instead hallucinating values for fields that were not explicitly present in the document structure."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:35:22.776804+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.000618
+      }
+    },
+    {
+      "case_id": "cord_development_000",
+      "split": "development",
+      "backend": "qwen",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "total_amount",
+          "confidence": 0.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            16500.0,
+            13000.0,
+            16000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "subtotal",
+          "expected": [],
+          "predicted": [
+            45500.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "REAL GANACHE",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "EGG TART",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "PIZZA TOAST",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 16500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 13000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 16000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 16500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 13000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 16000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 45500.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "tax_amount": [],
+        "total_amount": [
+          {
+            "value": 45500.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "qwen/qwen3.8-27b",
+        "provider": "groq",
+        "endpoint": "https://api.groq.com/openai/v1",
+        "pages_sent": 1,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "input_tokens": 2336,
+        "output_tokens": 264,
+        "response_model": "qwen/qwen3.8-27b",
+        "cache_hit": 1,
+        "provider_latency_seconds": 1.8773274999985006,
+        "response_cached_at_utc": "2026-10-06T07:44:08.461723+00:00",
+        "estimated_cost_usd": 0.0029248,
+        "paid_equivalent_usd": 0.0029248
+      },
+      "cost_usd": 0.0029248,
+      "latency_seconds": 32.64599439999802,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model hallucinated unit_price and subtotal values that were not present in the OCR text, likely attempting to infer them from the line totals and total amount."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:31:18.902801+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.00051925
+      }
+    },
+    {
+      "case_id": "cord_development_001",
+      "split": "development",
+      "backend": "qwen",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "total_amount",
+          "confidence": 0.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            23000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "subtotal",
+          "expected": [],
+          "predicted": [
+            23000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "Kopi Susu Kolonel",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "tax_amount": [],
+        "total_amount": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "qwen/qwen3.8-27b",
+        "provider": "groq",
+        "endpoint": "https://api.groq.com/openai/v1",
+        "pages_sent": 1,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "input_tokens": 2344,
+        "output_tokens": 157,
+        "response_model": "qwen/qwen3.8-27b",
+        "cache_hit": 1,
+        "provider_latency_seconds": 1.8417896999999357,
+        "response_cached_at_utc": "2026-10-06T07:44:10.345573+00:00",
+        "estimated_cost_usd": 0.0025032,
+        "paid_equivalent_usd": 0.0025032
+      },
+      "cost_usd": 0.0025032,
+      "latency_seconds": 10.282380500000727,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model incorrectly inferred a unit price and subtotal where none were explicitly labeled or required by the schema, likely due to an over-eager extraction logic attempting to fill fields based on the line total value."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:44:21.429445+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.00034175
+      }
+    },
+    {
+      "case_id": "cord_development_002",
+      "split": "development",
+      "backend": "qwen",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "tax_amount",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "total_amount",
+          "confidence": 0.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [],
+      "predictions": {
+        "description": [
+          {
+            "value": "S-Ovaltine 50%",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 20000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 20000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 18181.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "tax_amount": [
+          {
+            "value": 1818.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "total_amount": [
+          {
+            "value": 20000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": true,
+      "provider_metadata": {
+        "model": "qwen/qwen3.8-27b",
+        "provider": "groq",
+        "endpoint": "https://api.groq.com/openai/v1",
+        "pages_sent": 1,
+        "http_attempts": 2,
+        "rate_limit_responses": 1,
+        "backoff_seconds": 11.0,
+        "input_tokens": 1326,
+        "output_tokens": 158,
+        "response_model": "qwen/qwen3.8-27b",
+        "cache_hit": 1,
+        "provider_latency_seconds": 12.335554299999785,
+        "response_cached_at_utc": "2026-10-06T07:44:33.778440+00:00",
+        "estimated_cost_usd": 0.0016928000000000002,
+        "paid_equivalent_usd": 0.0016928000000000002
+      },
+      "cost_usd": 0.0016928000000000002,
+      "latency_seconds": 17.197752799998852,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring"
+    },
+    {
+      "case_id": "cord_held_out_000",
+      "split": "held_out",
+      "backend": "qwen",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "tax_amount": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "total_amount": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "subtotal",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "tax_amount",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "total_amount",
+          "confidence": 1.0,
+          "correct": 0
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            60.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "line_total",
+          "expected": [
+            "60.000"
+          ],
+          "predicted": [
+            60.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "subtotal",
+          "expected": [
+            "60.000"
+          ],
+          "predicted": [
+            60.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "tax_amount",
+          "expected": [
+            "5.455"
+          ],
+          "predicted": [
+            5.455
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "total_amount",
+          "expected": [
+            "60.000"
+          ],
+          "predicted": [
+            60.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "TICKET CP",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 2.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 60.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 60.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 60.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "tax_amount": [
+          {
+            "value": 5.455,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "total_amount": [
+          {
+            "value": 60.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "qwen/qwen3.8-27b",
+        "provider": "groq",
+        "endpoint": "https://api.groq.com/openai/v1",
+        "pages_sent": 1,
+        "http_attempts": 2,
+        "rate_limit_responses": 1,
+        "backoff_seconds": 23.0,
+        "input_tokens": 2418,
+        "output_tokens": 167,
+        "response_model": "qwen/qwen3.8-27b",
+        "cache_hit": 1,
+        "provider_latency_seconds": 24.619158899999093,
+        "response_cached_at_utc": "2026-10-06T07:44:58.412682+00:00",
+        "estimated_cost_usd": 0.0026024000000000004,
+        "paid_equivalent_usd": 0.0026024000000000004
+      },
+      "cost_usd": 0.0026024000000000004,
+      "latency_seconds": 50.834028399998715,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model extracted a unit_price where none was expected, and the other fields were extracted correctly but flagged as errors due to minor formatting differences (e.g., numeric vs string representation). The extraction logic correctly identified the values from the OCR text, but the schema validation failed due to strict type or presence expectations."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:45:01.615847+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.00066725
+      }
+    },
+    {
+      "case_id": "cord_held_out_001",
+      "split": "held_out",
+      "backend": "qwen",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "quantity",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "quantity",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "total_amount",
+          "confidence": 1.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "quantity",
+          "expected": [],
+          "predicted": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            17500.0,
+            46000.0,
+            27500.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "subtotal",
+          "expected": [],
+          "predicted": [
+            91000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "J.STB PROMO",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "Y.B.BAT",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "Y.BASO PROM",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 17500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 46000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 27500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 17500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 46000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 27500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 91000.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "91000",
+              "bbox": [
+                0.552615,
+                0.640125,
+                0.854163,
+                0.683437
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "tax_amount": [],
+        "total_amount": [
+          {
+            "value": 91000.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "91000",
+              "bbox": [
+                0.552615,
+                0.640125,
+                0.854163,
+                0.683437
+              ],
+              "confidence": 1.0
+            }
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "qwen/qwen3.8-27b",
+        "provider": "groq",
+        "endpoint": "https://api.groq.com/openai/v1",
+        "pages_sent": 1,
+        "http_attempts": 2,
+        "rate_limit_responses": 1,
+        "backoff_seconds": 19.0,
+        "input_tokens": 2321,
+        "output_tokens": 264,
+        "response_model": "qwen/qwen3.8-27b",
+        "cache_hit": 1,
+        "provider_latency_seconds": 21.06857630000013,
+        "response_cached_at_utc": "2026-10-06T07:45:22.705730+00:00",
+        "estimated_cost_usd": 0.0029128,
+        "paid_equivalent_usd": 0.0029128
+      },
+      "cost_usd": 0.0029128,
+      "latency_seconds": 27.369204500000706,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model incorrectly inferred quantities and unit prices where none were present in the source text, and misclassified the total amount as a subtotal. The extraction logic failed to correctly map the line items to their respective totals, instead hallucinating values for fields that were not explicitly present in the document structure."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:35:22.776804+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.000618
+      }
+    },
+    {
+      "case_id": "cord_development_000",
+      "split": "development",
+      "backend": "docling_text_llm",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 1,
+          "fp": 2,
+          "fn": 2
+        },
+        "quantity": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "description",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "tax_amount",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "total_amount",
+          "confidence": 0.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "description",
+          "expected": [
+            "REAL GANACHE",
+            "EGG TART",
+            "PIZZA TOAST"
+          ],
+          "predicted": [
+            "REAL GANACHE EGG TART",
+            "PIZZA TOAST",
+            "UNKNOWN ITEM"
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            16500.0,
+            16000.0,
+            13000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "subtotal",
+          "expected": [],
+          "predicted": [
+            45500.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "tax_amount",
+          "expected": [],
+          "predicted": [
+            0.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "REAL GANACHE EGG TART",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "PIZZA TOAST",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "UNKNOWN ITEM",
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 16500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 16000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 13000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "line_total": [
+          {
+            "value": 16500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 16000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "1 REAL GANACHE EGG TART 1 PIZZA TOAST",
+              "bbox": [
+                0.203832,
+                0.426082,
+                0.430396,
+                0.504147
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 13000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 45500.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "tax_amount": [
+          {
+            "value": 0.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_000",
+              "page": 1,
+              "text": "16,500",
+              "bbox": [
+                0.666054,
+                0.422053,
+                0.770622,
+                0.452775
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "total_amount": [
+          {
+            "value": 45500.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "input_tokens": 157,
+        "output_tokens": 279,
+        "input_mode": "docling_text",
+        "cache_hit": 1,
+        "provider_latency_seconds": 28.906901899999866,
+        "response_cached_at_utc": "2026-10-06T07:35:51.697454+00:00",
+        "temperature": 0,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "paid_equivalent_usd": 0.00045775,
+        "estimated_cost_usd": 0.0
+      },
+      "cost_usd": 0.0,
+      "latency_seconds": 59.67556879999938,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "layout",
+          "explanation": "The model failed to correctly segment the line items, merging multiple distinct items into a single bounding box and incorrectly associating line totals with the wrong descriptions. The extraction of unit prices and subtotals where none were expected indicates a failure in structural parsing of the receipt layout."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:36:21.374072+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.0005095
+      }
+    },
+    {
+      "case_id": "cord_development_001",
+      "split": "development",
+      "backend": "docling_text_llm",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "quantity": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "tax_amount",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "total_amount",
+          "confidence": 0.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "description",
+          "expected": [
+            "Kopi Susu Kolonel"
+          ],
+          "predicted": [
+            "Kopi Susu Kolonel 1"
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            23000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "subtotal",
+          "expected": [],
+          "predicted": [
+            23000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "tax_amount",
+          "expected": [],
+          "predicted": [
+            0.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "Kopi Susu Kolonel 1",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "tax_amount": [
+          {
+            "value": 0.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_001",
+              "page": 1,
+              "text": "| Kopi Susu Kolonel 1   |   23.000 |\n|-----------------------|----------|\n| Total                 |   23.000 |\n| Tunai                 |   50.000 |\n| Kembali               |   27.000 |",
+              "bbox": [
+                0.162502,
+                0.623158,
+                0.825924,
+                0.778717
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "total_amount": [
+          {
+            "value": 23000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "input_tokens": 163,
+        "output_tokens": 163,
+        "input_mode": "docling_text",
+        "cache_hit": 1,
+        "provider_latency_seconds": 30.499222500000542,
+        "response_cached_at_utc": "2026-10-06T07:36:51.888431+00:00",
+        "temperature": 0,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "paid_equivalent_usd": 0.00028525,
+        "estimated_cost_usd": 0.0
+      },
+      "cost_usd": 0.0,
+      "latency_seconds": 38.93981330000133,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model incorrectly parsed the quantity '1' as part of the description string and subsequently inferred unit price, subtotal, and tax fields that were not present in the ground truth, likely due to over-segmentation of the line item text."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:37:20.772848+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.000415
+      }
+    },
+    {
+      "case_id": "cord_development_002",
+      "split": "development",
+      "backend": "docling_text_llm",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "tax_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "tax_amount",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "total_amount",
+          "confidence": 0.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "subtotal",
+          "expected": [
+            "18,181"
+          ],
+          "predicted": [
+            20000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "S-Ovaltine 50%",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 20000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 20000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_development_002",
+              "page": 1,
+              "text": "1 S-Ovaltine 50%",
+              "bbox": [
+                0.069476,
+                0.529022,
+                0.330458,
+                0.581371
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 20000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "tax_amount": [
+          {
+            "value": 1818.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ],
+        "total_amount": [
+          {
+            "value": 20000.0,
+            "confidence": 0.0,
+            "source": null
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "input_tokens": 172,
+        "output_tokens": 164,
+        "input_mode": "docling_text",
+        "cache_hit": 1,
+        "provider_latency_seconds": 34.649190800000724,
+        "response_cached_at_utc": "2026-10-06T07:37:55.452416+00:00",
+        "temperature": 0,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "paid_equivalent_usd": 0.000289,
+        "estimated_cost_usd": 0.0
+      },
+      "cost_usd": 0.0,
+      "latency_seconds": 39.51138929999979,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model failed to correctly associate the subtotal and tax values from the OCR text, instead defaulting to the line total value for the subtotal field and miscalculating the tax amount relationship."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:38:23.904304+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.0002915
+      }
+    },
+    {
+      "case_id": "cord_held_out_000",
+      "split": "held_out",
+      "backend": "docling_text_llm",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "tax_amount": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "total_amount": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "unit_price",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "subtotal",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "tax_amount",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "total_amount",
+          "confidence": 1.0,
+          "correct": 0
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            30.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "line_total",
+          "expected": [
+            "60.000"
+          ],
+          "predicted": [
+            60.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "subtotal",
+          "expected": [
+            "60.000"
+          ],
+          "predicted": [
+            60.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "tax_amount",
+          "expected": [
+            "5.455"
+          ],
+          "predicted": [
+            5.455
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "total_amount",
+          "expected": [
+            "60.000"
+          ],
+          "predicted": [
+            60.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "TICKET CP",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 2.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 30.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 60.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 60.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "tax_amount": [
+          {
+            "value": 5.455,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "total_amount": [
+          {
+            "value": 60.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_000",
+              "page": 1,
+              "text": "| 901016        | -TICKET CP                  | 60.000        |\n|---------------|-----------------------------|---------------|\n| 2             | 60.000 TOTAL DISC $ TAX     | -60.000 5.455 |\n| TOTAL         | Subtotal (Qty 2.0060.000    | 60.000        |\n|               |                             | 60.000        |\n| CUSTONER IHEO | - EDC CIMB NIAGA No: Xx7730 |               |",
+              "bbox": [
+                0.100653,
+                0.588698,
+                0.853008,
+                0.999562
+              ],
+              "confidence": 1.0
+            }
+          }
+        ]
+      },
+      "confidence": 1.0,
+      "mandatory_review": false,
+      "correct": false,
+      "provider_metadata": {
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "input_tokens": 236,
+        "output_tokens": 175,
+        "input_mode": "docling_text",
+        "cache_hit": 1,
+        "provider_latency_seconds": 28.61812109999846,
+        "response_cached_at_utc": "2026-10-06T07:38:52.544577+00:00",
+        "temperature": 0,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "paid_equivalent_usd": 0.0003215,
+        "estimated_cost_usd": 0.0
+      },
+      "cost_usd": 0.0,
+      "latency_seconds": 54.832990599998084,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model inferred a unit price of 30.0 by dividing the line total (60.0) by the quantity (2), which was not explicitly present in the OCR text. The other fields were correctly extracted but flagged due to minor formatting differences (e.g., numeric normalization vs string representation)."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:39:20.471974+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.00066725
+      }
+    },
+    {
+      "case_id": "cord_held_out_001",
+      "split": "held_out",
+      "backend": "docling_text_llm",
+      "status": "completed",
+      "error": null,
+      "counts": {
+        "description": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "quantity": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "unit_price": {
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "line_total": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "subtotal": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "tax_amount": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "total_amount": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "field_samples": [
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "description",
+          "confidence": 1.0,
+          "correct": 1
+        },
+        {
+          "field": "quantity",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "quantity",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "quantity",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "unit_price",
+          "confidence": 0.0,
+          "correct": 0
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "line_total",
+          "confidence": 0.0,
+          "correct": 1
+        },
+        {
+          "field": "subtotal",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "tax_amount",
+          "confidence": 1.0,
+          "correct": 0
+        },
+        {
+          "field": "total_amount",
+          "confidence": 1.0,
+          "correct": 1
+        }
+      ],
+      "field_errors": [
+        {
+          "field": "quantity",
+          "expected": [],
+          "predicted": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "unit_price",
+          "expected": [],
+          "predicted": [
+            17500.0,
+            46000.0,
+            27500.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "subtotal",
+          "expected": [],
+          "predicted": [
+            91000.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        },
+        {
+          "field": "tax_amount",
+          "expected": [],
+          "predicted": [
+            0.0
+          ],
+          "category": "reasoning",
+          "attribution": "suspected; not manually adjudicated"
+        }
+      ],
+      "predictions": {
+        "description": [
+          {
+            "value": "J.STB PROMO",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "Y.B.BAT",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": "Y.BASO PROM",
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "quantity": [
+          {
+            "value": 1.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 1.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "unit_price": [
+          {
+            "value": 17500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 46000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 27500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "line_total": [
+          {
+            "value": 17500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 46000.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          },
+          {
+            "value": 27500.0,
+            "confidence": 0.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "J.STB PROMO Y.B.BAT Y.BASO PROM TOTAL CASH",
+              "bbox": [
+                0.122877,
+                0.519251,
+                0.477561,
+                0.726247
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "subtotal": [
+          {
+            "value": 91000.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "91000",
+              "bbox": [
+                0.552615,
+                0.640125,
+                0.854163,
+                0.683437
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "tax_amount": [
+          {
+            "value": 0.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "17500",
+              "bbox": [
+                0.70671,
+                0.522273,
+                0.860804,
+                0.561053
+              ],
+              "confidence": 1.0
+            }
+          }
+        ],
+        "total_amount": [
+          {
+            "value": 91000.0,
+            "confidence": 1.0,
+            "source": {
+              "document_id": "cord_held_out_001",
+              "page": 1,
+              "text": "91000",
+              "bbox": [
+                0.552615,
+                0.640125,
+                0.854163,
+                0.683437
+              ],
+              "confidence": 1.0
+            }
+          }
+        ]
+      },
+      "confidence": 0.0,
+      "mandatory_review": true,
+      "correct": false,
+      "provider_metadata": {
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "input_tokens": 144,
+        "output_tokens": 283,
+        "input_mode": "docling_text",
+        "cache_hit": 1,
+        "provider_latency_seconds": 30.68190350000077,
+        "response_cached_at_utc": "2026-10-06T07:39:51.173160+00:00",
+        "temperature": 0,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "paid_equivalent_usd": 0.0004605,
+        "estimated_cost_usd": 0.0
+      },
+      "cost_usd": 0.0,
+      "latency_seconds": 36.982531700001346,
+      "latency_source": "original Docling conversion + model generation; excludes preflight/scoring",
+      "judge": {
+        "status": "completed",
+        "diagnosis": {
+          "category": "reasoning",
+          "explanation": "The model is hallucinating fields (quantity, unit_price, subtotal, tax_amount) that are not present in the document structure or expected output. It is incorrectly assigning values to these fields based on a misinterpretation of the document's layout and content."
+        },
+        "model": "gemini-3.1-flash-lite",
+        "response_model": "gemini-3.1-flash-lite",
+        "temperature": 0,
+        "run_at_utc": "2026-10-06T07:40:20.984727+00:00",
+        "cache_hit": true,
+        "http_attempts": 1,
+        "rate_limit_responses": 0,
+        "backoff_seconds": 0,
+        "cost_usd": 0.0,
+        "paid_equivalent_usd": 0.00064525
+      }
+    }
+  ],
+  "spent_or_reserved_usd": 0.023181250000000042,
+  "api_attempt_history": {
+    "gemini-3.1-flash-lite": {
+      "requests": 22,
+      "http_attempts": 23,
+      "statuses": {
+        "200": 22,
+        "503": 1
+      },
+      "backoff_seconds": 2
+    },
+    "gemini-3.8-flash": {
+      "requests": 3,
+      "http_attempts": 10,
+      "statuses": {
+        "503": 5,
+        "429": 5
+      },
+      "backoff_seconds": 64
+    },
+    "gemini-2.5-flash": {
+      "requests": 2,
+      "http_attempts": 2,
+      "statuses": {
+        "404": 2
+      },
+      "backoff_seconds": 0
+    },
+    "gemini-3.1-pro-preview": {
+      "requests": 1,
+      "http_attempts": 6,
+      "statuses": {
+        "429": 6
+      },
+      "backoff_seconds": 62
+    },
+    "gemini-2.5-flash-lite": {
+      "requests": 1,
+      "http_attempts": 1,
+      "statuses": {
+        "404": 1
+      },
+      "backoff_seconds": 0
+    },
+    "qwen/qwen3.8-27b": {
+      "requests": 5,
+      "http_attempts": 8,
+      "statuses": {
+        "429": 3,
+        "200": 5
+      },
+      "backoff_seconds": 53.0
+    }
+  },
+  "rate_limit_behaviour": {
+    "gemini_minimum_interval_seconds": 30.0,
+    "max_retries": 5,
+    "recorded_http_attempts": 50,
+    "recorded_429_responses": 14,
+    "recorded_backoff_seconds": 181.0,
+    "cache_hits": 28,
+    "note": "Cumulative trace history includes failed/aborted smoke attempts and the Pro probe. Direct access diagnostics are excluded; cache reads add no HTTP calls."
+  },
+  "projected_full_comparison_usd": 0.10108800000000003,
+  "projected_full_paid_equivalent_usd": 0.194548,
+  "original_dataset_sha256": "dbe624e87b613a9d53f43f27458c81427b994dec4c938ce2cfa2c5de03dc921a",
+  "dataset_hash_normalization": "LF line endings; field labels unchanged",
+  "rescored_at_utc": "2026-10-06T08:40:02.002215+00:00",
+  "rescore_source_sha256": "601b4ff3a3b583fc64013c903c324658a12ca5c60da96fd7477e2fb0cb0aa04b",
+  "label_preparation_correction": {
+    "previous_manifest": "cord_manifest_before_list_fix.json",
+    "previous_dataset_sha256": "b74bf01ba22000c74bcf719f05fb7d5da4979f0b462070190d0c06e758182b55",
+    "changed_cases": [
+      "cord_held_out_013"
+    ],
+    "operation": "Flatten list-valued annotations; model inputs and predictions unchanged",
+    "previous_manifest_sha256": "b74bf01ba22000c74bcf719f05fb7d5da4979f0b462070190d0c06e758182b55"
+  }
+}

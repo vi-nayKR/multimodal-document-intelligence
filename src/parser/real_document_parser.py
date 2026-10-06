@@ -49,7 +49,7 @@ def _parse_sync(path: Path) -> ParsedArtifact:
         raise RuntimeError("Docling is required for document parsing; install project dependencies") from exc
 
     # Docling's model pipeline is expensive and is not documented as thread-safe.
-    # Reuse one instance and serialize local parsing to bound memory on laptops.
+    # ponytail: one parser lock bounds laptop memory; use process workers when parsing throughput matters.
     with _converter_lock:
         if _converter is None:
             _converter = DocumentConverter()
@@ -62,7 +62,7 @@ def _parse_sync(path: Path) -> ParsedArtifact:
     for item in items:
         item_text = getattr(item, "text", None)
         if not item_text and hasattr(item, "export_to_markdown"):
-            item_text = item.export_to_markdown()
+            item_text = item.export_to_markdown(doc=document)
         if not item_text:
             continue
         provenance = list(getattr(item, "prov", []) or [])

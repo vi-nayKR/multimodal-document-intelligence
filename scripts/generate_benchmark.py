@@ -113,7 +113,7 @@ def main() -> None:
                 for row in range(len(invoice_items))
             ],
         })
-    (OUTPUT / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    (OUTPUT / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8", newline="\n")
     print(f"Generated {len(manifest['cases'])} labeled pairs at {OUTPUT}")
 
 
