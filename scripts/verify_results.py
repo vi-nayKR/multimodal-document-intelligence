@@ -105,7 +105,7 @@ def main(with_docling: bool = False) -> None:
     (ROOT / "results").mkdir(exist_ok=True)
     (ROOT / "results/verification.json").write_text(json.dumps(report, indent=2) + "\n")
     bullets = [
-        "# Provisional resume bullets",
+        "# Provisional verified claims",
         "",
         "Verified features only. Live model-quality metrics and public Spaces deployment are excluded "
         "until measured and verified. Numeric sources: `verification.json`.",
@@ -142,7 +142,7 @@ def main(with_docling: bool = False) -> None:
             )
             qwen_label += f" ({comparison['vlm_provider'].title()})"
             bullets = [
-                "# Resume bullets",
+                "# Verified claims",
                 "",
                 "Numeric sources: `real_comparison.json` and `verification.json`. "
                 "Field F1 uses frozen CORD annotations; fixture checks use a stub extractor.",
@@ -156,7 +156,7 @@ def main(with_docling: bool = False) -> None:
                 f"{report['batch_fixture']['documents']}-document stub fixture, and a no-key "
                 f"PDF review demo highlighting {report['sample_findings']} precomputed mismatches.",
             ]
-    (ROOT / "results/RESUME_BULLETS.md").write_text("\n".join(bullets) + "\n")
+    (ROOT / "results/CLAIMS.md").write_text("\n".join(bullets) + "\n")
     if with_docling:
         from src.parser.real_document_parser import parse_document
 

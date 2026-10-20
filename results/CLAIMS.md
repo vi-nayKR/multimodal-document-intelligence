@@ -1,4 +1,4 @@
-# Resume bullets
+# Verified claims
 
 Numeric sources: `real_comparison.json` and `verification.json`. Field F1 uses frozen CORD annotations; fixture checks use a stub extractor.
 

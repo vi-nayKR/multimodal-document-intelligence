@@ -4,7 +4,7 @@ Evidence-backed invoice and purchase-order reconciliation with gemini-3.1-flash-
 
 ReconcileAI accepts an invoice and its purchase order, extracts typed fields from both documents, matches their line items, and reports quantity, price, currency, missing-item, and arithmetic discrepancies. Every supported finding links back to a page, source excerpt, and normalized bounding box. Reviewers can correct extracted records and rerun the controls without losing the original result.
 
-> Status: public portfolio prototype. The measured receipt comparison uses gemini-3.1-flash-lite and Groq qwen/qwen3.8-27b. Results distinguish live extraction from synthetic control fixtures. Spaces deployment is pending HF_TOKEN; the sample-only demo runs locally without keys.
+> Status: public portfolio prototype. The measured receipt comparison uses gemini-3.1-flash-lite and Groq qwen/qwen3.8-27b. Results distinguish live extraction from synthetic control fixtures. There is no hosted demo; the sample-only review demo runs locally without keys.
 
 ## Results
 
