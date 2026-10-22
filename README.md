@@ -2,9 +2,9 @@
 
 Evidence-backed invoice and purchase-order reconciliation with gemini-3.1-flash-lite, Docling, FastAPI, and deterministic financial controls.
 
-ReconcileAI accepts an invoice and its purchase order, extracts typed fields from both documents, matches their line items, and reports quantity, price, currency, missing-item, and arithmetic discrepancies. Every supported finding links back to a page, source excerpt, and normalized bounding box. Reviewers can correct extracted records and rerun the controls without losing the original result.
+ReconcileAI accepts an invoice and its purchase order, extracts typed fields from both documents, matches their line items, and reports quantity, price, currency, missing-item, and arithmetic discrepancies. Source-backed findings link to a page, source excerpt and normalized bounding box; unresolved evidence triggers review rather than a claim of verified support. Reviewers can correct extracted records and rerun the controls without losing the original result.
 
-> Status: public portfolio prototype. The measured receipt comparison uses gemini-3.1-flash-lite and Groq qwen/qwen3.8-27b. Results distinguish live extraction from synthetic control fixtures. There is no hosted demo; the sample-only review demo runs locally without keys.
+> Status: public portfolio prototype. The measured receipt comparison uses gemini-3.1-flash-lite and Groq qwen/qwen3.8-27b. There is no hosted demo; the sample-only review demo runs locally without keys. Start with the [architecture guide](docs/architecture.md), [evidence map](docs/evidence.md) or [three-minute demo](docs/demo-script.md). Receipt extraction scores, synthetic control checks and live invoice/PO processing are separate scopes—not one end-to-end accuracy result.
 
 ## Results
 
@@ -18,7 +18,13 @@ ReconcileAI accepts an invoice and its purchase order, extracts typed fields fro
 | Qwen3.8-27B (Groq), `qwen/qwen3.8-27b` | Held-out field F1 65.96%; review 100%; 19/20 completed | [Comparison](results/COMPARISON.md) |
 | Docling OCR + Gemini 3.1 Flash-Lite (`gemini-3.1-flash-lite`) | Held-out field F1 56.92%; review 85%; 20/20 completed | [Comparison](results/COMPARISON.md) |
 
-Fixture checks exercise code using labeled or prerecorded extraction, not model perception. CORD preparation counts documents and labels; it does not measure extraction quality.
+Read these as three distinct scopes:
+
+- **CORD field extraction:** the F1 figures score seven field types on 20 held-out receipts, not invoice/PO reconciliation accuracy. Failed documents contribute missed fields. Gemini's unit-price F1 is only 28.57%, despite its 76.03% aggregate field micro-F1.
+- **Deterministic financial controls:** the 50 synthetic pairs use labeled/prerecorded extraction, not model perception. This verifies rule behavior, not end-to-end model-driven reconciliation.
+- **Live invoice/PO processing:** the application supports it, but the recorded receipt comparison and fixture checks do not establish its accuracy. The paired live runner is a separate experiment.
+
+Gemini and Qwen route 100% of these held-out receipts to human review; no reduced-review workload is demonstrated. CORD omits required invoice/vendor headers, so this routing result is not a prediction of real-invoice deployment behavior. Field scoring compares per-document value multisets and can miss values attached to the wrong line item. The text baseline is **Docling OCR plus text-only Gemini**, not standalone OCR accuracy; both vision adapters also receive parsed Docling text. See [comparison](results/COMPARISON.md) and [error analysis](ERROR_ANALYSIS.md).
 
 ## Demo flow
 
@@ -39,7 +45,7 @@ For a no-key walkthrough, start the server and click **Open prerecorded sample**
 flowchart LR
     Upload[Invoice + purchase order] --> Store[Local file store + SQLite job]
     Store --> Parse[Docling parser]
-    Store --> Gemini[gemini-3.1-flash-lite extraction]
+    Parse --> Gemini[gemini-3.1-flash-lite extraction]
     Parse --> Ground[Evidence resolver]
     Gemini --> Ground
     Ground --> Rules[Deterministic reconciliation]
@@ -115,7 +121,7 @@ The repository includes a deterministic generator for 50 labeled invoice/PO pair
 GEMINI_API_KEY=... .venv/bin/python scripts/run_reconciliation_eval.py --split held_out
 ```
 
-The live report records discrepancy precision, recall, F1, review rate, per-case latency, and case-level errors. Generated documents and unreviewed result files stay untracked so a published report must be an intentional, reproducible artifact.
+This is an optional new live invoice/PO experiment, not the source of the recorded CORD field scores or the 50-pair fixture success. No completed paired live-quality report is claimed here. Its discrepancy scorer counts types per completed case, not correct affected-row identity; failed cases are reported separately. Generated documents and unreviewed result files stay untracked so a published report must be an intentional, reproducible artifact.
 
 For broader extraction analysis, [DocuBench](https://github.com/DocuPipe/DocuBench) provides difficult public documents and an open scorer. It is complementary to this paired reconciliation benchmark.
 
@@ -130,7 +136,8 @@ python scripts/prepare_cord.py --limit 20
 python scripts/run_real_eval.py --smoke
 # Review results/SMOKE.md and smoke_comparison.json's full-run cost projection first.
 python scripts/run_real_eval.py
-# Recalculate scores, ECE, plots and review thresholds without OCR or API calls:
+# Recalculate scores, ECE, plots and development-selected thresholds without OCR/API calls.
+# This writes reports; preserve the recorded artifacts before starting a new experiment.
 python scripts/run_real_eval.py --rescore real_comparison.json --target-review-rate 0.2
 ```
 
